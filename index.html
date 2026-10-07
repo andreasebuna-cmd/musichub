@@ -587,6 +587,20 @@ addEventListener("resize",resize);resize();requestAnimationFrame(draw);
 
 /* Live Discord member counter */
 const DISCORD_INVITE = "yuaaf5YNfE";
+let displayedMemberCount=null, memberCountAnimation=null;
+function animateMemberCount(element,from,to){
+  if(memberCountAnimation)cancelAnimationFrame(memberCountAnimation);
+  if(from===null){element.textContent=to.toLocaleString("en-US");return}
+  const start=performance.now(),duration=850;
+  function frame(now){
+    const progress=Math.min((now-start)/duration,1);
+    const eased=1-Math.pow(1-progress,4);
+    const value=Math.round(from+(to-from)*eased);
+    element.textContent=value.toLocaleString("en-US");
+    if(progress<1)memberCountAnimation=requestAnimationFrame(frame);
+  }
+  memberCountAnimation=requestAnimationFrame(frame);
+}
 async function updateLiveCounter(){
   const status=document.getElementById("counter-status"), count=document.getElementById("member-count"), stat=document.getElementById("members-stat");
   if(!status||!count)return;
@@ -595,11 +609,15 @@ async function updateLiveCounter(){
     if(!response.ok)throw new Error();
     const data=await response.json();
     if(typeof data.approximate_member_count!=="number")throw new Error();
-    count.textContent=data.approximate_member_count.toLocaleString("en-US");
+    const nextCount=data.approximate_member_count;
+    if(nextCount!==displayedMemberCount){
+      animateMemberCount(count,displayedMemberCount,nextCount);
+      displayedMemberCount=nextCount;
+    }
     stat.classList.remove("loading"); status.textContent="Live • Discord connected";
   }catch(e){status.textContent="Live count temporarily unavailable";stat.classList.add("loading")}
 }
-updateLiveCounter();setInterval(updateLiveCounter,60000);
+updateLiveCounter();setInterval(updateLiveCounter,30000);
 
 /* Tiny parallax on the hero emblem */
 addEventListener("pointermove",e=>{
