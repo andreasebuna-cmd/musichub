@@ -1049,7 +1049,7 @@ function renderViewedProfile(profile){
           <p class="profile-sub">${translateText("Discord account")}</p>
         </div>
       </div>
-      ${profile.privacy==="public"||isOwner?`<div class="profile-grid">
+      ${isOwner?"":`<div class="friend-action"><button id="friend-action-btn" class="btn" type="button" onclick="sendFriendRequest(&quot;${escapeHtml(profile.id)}&quot;)" ${profile.friendship==="friends"||profile.friendship==="pending"?"disabled":""}>${profile.friendship==="friends"?"✓ Friends":profile.friendship==="pending"?"Request sent":"Add friend"}</button></div>`}${profile.privacy==="public"||isOwner||profile.friendship==="friends"?`<div class="profile-grid">
         <div class="profile-stat"><div class="profile-stat-label">${translateText("Server membership")}</div><div class="profile-stat-value">${translateText("Member")} · ${translateText("Yes")}</div></div>
         <div class="profile-stat"><div class="profile-stat-label">${translateText("Discord ID")}</div><div class="profile-stat-value">${escapeHtml(profile.id)}</div></div>
         <div class="profile-stat"><div class="profile-stat-label">${translateText("Online status")}</div><div class="profile-stat-value">${translateText("Online status unavailable")}</div></div>
