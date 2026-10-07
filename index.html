@@ -1246,6 +1246,49 @@ function closeSearchSuggestions(){
   menu.classList.remove("open");
   menu.setAttribute("aria-hidden","true");
 }
+async function loadNotifications(showToast=true){
+  if(!isDiscordAuthenticated())return;
+  try{
+    const response=await fetch("/api/notifications",{credentials:"same-origin",cache:"no-store"});
+    if(!response.ok)return;
+    const data=await response.json();
+    const list=Array.isArray(data.notifications)?data.notifications:[];
+    const unread=Number(data.unreadCount||0);
+    const badge=document.getElementById("notification-badge");
+    if(badge){badge.textContent=unread>99?"99+":String(unread);badge.classList.toggle("visible",unread>0);}
+    const count=document.getElementById("notification-panel-count");if(count)count.textContent=unread?unread+" unread":"";
+    const root=document.getElementById("notification-list");
+    if(root){
+      root.innerHTML=list.length?list.map(function(n){return "<div class=\"notification-item\"><img class=\"notification-avatar\" data-notification-avatar=\""+escapeHtml(n.fromId)+"\" src=\"https://cdn.discordapp.com/embed/avatars/0.png\" alt=\"\"><div class=\"notification-copy\"><strong data-notification-name=\""+escapeHtml(n.fromId)+"\">Hub member</strong>"+(n.type==="friend_request"?" vous a envoyé une demande d’amis.":" a accepté votre demande d’amis.")+"</div>"+(n.type==="friend_request"&&n.requestId?"<button class=\"notification-action\" type=\"button\" onclick=\"respondToFriendRequest(\\\""+escapeHtml(n.requestId)+"\\\",\\\"accept\\\")\">Accept</button>":"")+"</div>"}).join(""):"<div class=\"notification-empty\">No notifications</div>";
+      list.slice(0,20).forEach(async function(n){
+        try{const r=await fetch("/api/profiles/view?id="+encodeURIComponent(n.fromId),{credentials:"same-origin",cache:"no-store"});const d=await r.json();const p=d.profile;if(!p)return;const name=p.displayName||"Private Username";const nameEl=root.querySelector("[data-notification-name=\""+n.fromId+"\"]");const img=root.querySelector("[data-notification-avatar=\""+n.fromId+"\"]");if(nameEl)nameEl.textContent=name;if(img&&p.avatar)img.src=p.avatar;}catch(error){}
+      });
+    }
+    const signature=list.filter(function(n){return !n.read}).map(function(n){return n.id}).join("|");
+    if(showToast&&unread>0&&signature&&signature!==lastNotificationSignature){if(lastNotificationSignature)showHubToast(unread===1?"You have a new notification.":"You have "+unread+" new notifications.");lastNotificationSignature=signature;}else if(!lastNotificationSignature)lastNotificationSignature=signature;
+  }catch(error){}
+}
+let lastNotificationSignature="";
+function toggleNotifications(){
+  if(!isDiscordAuthenticated())return;
+  const panel=document.getElementById("notification-panel"),button=document.getElementById("notification-btn");if(!panel||!button)return;
+  const open=!panel.classList.contains("open");panel.classList.toggle("open",open);panel.setAttribute("aria-hidden",open?"false":"true");button.classList.toggle("open",open);button.setAttribute("aria-expanded",open?"true":"false");
+  if(open)loadNotifications(false);
+}
+function closeNotifications(){
+  const panel=document.getElementById("notification-panel"),button=document.getElementById("notification-btn");if(!panel||!button)return;
+  panel.classList.remove("open");panel.setAttribute("aria-hidden","true");button.classList.remove("open");button.setAttribute("aria-expanded","false");
+}
+function showHubToast(text){
+  const toast=document.getElementById("hub-toast"),copy=document.getElementById("hub-toast-text");if(!toast||!copy)return;copy.textContent=text;toast.classList.add("show");clearTimeout(showHubToast.timer);showHubToast.timer=setTimeout(function(){toast.classList.remove("show")},5200);
+}
+async function sendFriendRequest(userId){
+  const button=document.getElementById("friend-action-btn");if(button)button.disabled=true;
+  try{const response=await fetch("/api/friends/request",{method:"POST",credentials:"same-origin",headers:{"Content-Type":"application/json"},body:JSON.stringify({userId:userId})});const data=await response.json();if(button){button.textContent=data.status==="friends"?"✓ Friends":"Request sent";button.classList.add(data.status==="friends"?"friend-added":"friend-requested");}}catch(error){if(button){button.disabled=false;button.textContent="Add friend";}}
+}
+async function respondToFriendRequest(requestId,action){
+  try{const response=await fetch("/api/friends/respond",{method:"POST",credentials:"same-origin",headers:{"Content-Type":"application/json"},body:JSON.stringify({requestId:requestId,action:action})});if(response.ok)await loadNotifications(false);}catch(error){}
+}
 async function renderSearchSuggestions(query=""){
   const menu=document.getElementById("search-suggestions");
   if(!menu)return;
