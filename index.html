@@ -1013,7 +1013,8 @@ function renderDiscordNavigation(){
   }
   renderMainMenu();
 
-(async function loadDiscordSession(){
+}
+async function loadDiscordSession(){
   try{
     const response=await fetch("/api/auth/me",{credentials:"same-origin",cache:"no-store"});
     if(!response.ok)return;
@@ -1021,7 +1022,6 @@ function renderDiscordNavigation(){
     if(data&&data.authenticated&&data.user)window.setDiscordUser(data.user);
     else window.setDiscordUser(null);
   }catch(error){}
-})();
 }
 function handleDiscordAction(event){
   if(!isDiscordGuildMember())return;
@@ -1159,6 +1159,7 @@ window.addEventListener("load",()=>{
   showPage(pages.includes(id)?id:"home");
   initSiteSearch();
   renderDiscordNavigation();
+  loadDiscordSession();
 });
 
 /* Animated Halloween / abstract particles */
