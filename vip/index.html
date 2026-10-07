@@ -3,76 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<meta name="theme-color" content="#08090d">
-<meta name="description" content="Andreas Music Hub VIP — exclusive privileges, early access and premium community benefits.">
+<meta http-equiv="refresh" content="0;url=/#vip">
 <title>VIP — Andreas Music Hub</title>
-<style>
-:root{--bg:#05060a;--gold:#f5c76a;--gold2:#fff0ad;--diamond:#dff8ff;--muted:#a7adb8;--glass:rgba(255,255,255,.07);--border:rgba(255,255,255,.14)}
-*{box-sizing:border-box;margin:0;padding:0}
-body{min-height:100vh;color:#f7f7fa;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display",Inter,Segoe UI,sans-serif;background:radial-gradient(circle at 50% 0%,rgba(245,199,106,.14),transparent 34%),radial-gradient(circle at 15% 70%,rgba(190,230,255,.08),transparent 28%),linear-gradient(145deg,#030408,#0b0d14 55%,#040509);overflow-x:hidden}
-body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.045;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
-.ambient{position:fixed;inset:0;pointer-events:none;overflow:hidden}
-.orb{position:absolute;border-radius:50%;filter:blur(85px);animation:float 12s ease-in-out infinite alternate}.a{width:420px;height:420px;left:-170px;top:15%;background:#d9a93d;opacity:.18}.b{width:360px;height:360px;right:-130px;top:25%;background:#bfefff;opacity:.13;animation-delay:-5s}.c{width:260px;height:260px;left:42%;bottom:-150px;background:#fff0a8;opacity:.12;animation-delay:-8s}@keyframes float{to{transform:translate3d(45px,-35px,0) scale(1.1)}}
-.nav{position:fixed;z-index:10;top:18px;left:50%;transform:translateX(-50%);width:min(1100px,calc(100% - 28px));height:70px;padding:10px 13px 10px 18px;display:flex;align-items:center;justify-content:space-between;gap:18px;background:rgba(10,12,17,.62);border:1px solid rgba(255,255,255,.13);border-radius:24px;backdrop-filter:blur(26px);box-shadow:0 20px 70px rgba(0,0,0,.42)}
-.brand{display:flex;align-items:center;gap:11px;color:white;text-decoration:none}.brand img{width:42px;height:42px;border-radius:14px;object-fit:cover;box-shadow:0 0 30px rgba(245,199,106,.2)}.brand strong{display:block;font-size:15px}.brand small{display:block;color:#8f949d;font-size:10px;margin-top:2px}
-.back{color:#111;padding:13px 17px;border-radius:15px;text-decoration:none;font-weight:850;font-size:12px;background:linear-gradient(135deg,var(--gold2),var(--gold));box-shadow:0 12px 35px rgba(245,199,106,.2);transition:.25s}.back:hover{transform:translateY(-2px);box-shadow:0 17px 45px rgba(245,199,106,.32)}
-main{width:min(1100px,calc(100% - 32px));margin:auto}
-.hero{min-height:100vh;display:grid;place-items:center;text-align:center;padding:145px 0 80px}
-.kicker{font-size:11px;text-transform:uppercase;letter-spacing:2px;font-weight:850;color:var(--gold);margin-bottom:18px}
-h1{font-size:clamp(65px,11vw,135px);line-height:.83;letter-spacing:-8px;margin-bottom:28px;background:linear-gradient(115deg,#fff 10%,var(--diamond) 35%,var(--gold2) 67%,var(--gold));-webkit-background-clip:text;background-clip:text;color:transparent}
-.hero p{max-width:720px;margin:auto;color:var(--muted);font-size:17px;line-height:1.7}
-.actions{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:32px}.buy{display:inline-flex;align-items:center;justify-content:center;min-width:220px;padding:17px 25px;border-radius:18px;color:#17130a;text-decoration:none;font-weight:900;background:linear-gradient(135deg,var(--gold2),var(--gold));box-shadow:0 18px 55px rgba(245,199,106,.24);transition:.25s}.buy:hover{transform:translateY(-3px);box-shadow:0 22px 65px rgba(245,199,106,.35)}.buy.disabled{cursor:not-allowed;opacity:.78;filter:saturate(.7)}.buy.disabled:hover{transform:none}
-section{padding:95px 0}.head{text-align:center;max-width:720px;margin:0 auto 45px}.head h2{font-size:clamp(42px,6vw,70px);letter-spacing:-4px;margin-bottom:16px}.head p{color:var(--muted);line-height:1.65}
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.card{min-height:215px;padding:28px;border-radius:28px;background:linear-gradient(145deg,rgba(255,255,255,.085),rgba(255,255,255,.025));border:1px solid rgba(255,255,255,.11);backdrop-filter:blur(25px);box-shadow:inset 0 1px rgba(255,255,255,.08),0 25px 70px rgba(0,0,0,.28);transition:.3s}.card:hover{transform:translateY(-6px);border-color:rgba(245,199,106,.3)}.icon{width:46px;height:46px;display:grid;place-items:center;border-radius:15px;margin-bottom:23px;color:var(--gold2);font-size:20px;background:linear-gradient(145deg,rgba(245,199,106,.16),rgba(210,245,255,.08));border:1px solid rgba(245,199,106,.2)}.card h3{font-size:18px;margin-bottom:10px}.card p{color:#9299a4;font-size:13px;line-height:1.65}
-.highlight{margin-top:15px;padding:34px;border-radius:30px;background:linear-gradient(120deg,rgba(245,199,106,.11),rgba(210,245,255,.05));border:1px solid rgba(245,199,106,.18);text-align:center}.highlight strong{display:block;font-size:24px;margin-bottom:9px}.highlight span{color:#a5abb5;font-size:13px;line-height:1.6}
-.final{padding:100px 0 120px;text-align:center}.final h2{font-size:clamp(45px,7vw,82px);letter-spacing:-5px;margin-bottom:16px}.final p{color:var(--muted);max-width:600px;margin:auto;line-height:1.7}
-footer{padding:25px 0 35px;border-top:1px solid rgba(255,255,255,.07);color:#686e78;font-size:11px;display:flex;justify-content:space-between}
-@media(max-width:800px){.grid{grid-template-columns:1fr}.nav{height:64px}.brand small{display:none}h1{letter-spacing:-5px}section{padding:70px 0}.hero{padding-top:130px}}
-@media(max-width:500px){main{width:calc(100% - 22px)}.brand strong{font-size:13px}.back{padding:11px 13px}.hero p{font-size:15px}}
-/* Settings */
-.settings-wrap{position:relative}.settings-btn{width:42px;height:42px;border:1px solid rgba(255,255,255,.1);border-radius:14px;background:rgba(255,255,255,.055);color:#aab0ba;display:grid;place-items:center;cursor:pointer;transition:.25s}.settings-btn:hover,.settings-btn.open{color:#fff;background:rgba(255,255,255,.1);transform:rotate(18deg)}.settings-btn svg{width:18px;height:18px}.settings-menu{position:absolute;right:0;top:53px;width:255px;padding:14px;border-radius:22px;background:rgba(12,14,20,.9);border:1px solid rgba(255,255,255,.13);box-shadow:0 22px 70px rgba(0,0,0,.5),inset 0 1px rgba(255,255,255,.08);backdrop-filter:blur(28px) saturate(150%);opacity:0;visibility:hidden;transform:translateY(-8px) scale(.97);transform-origin:top right;transition:.28s cubic-bezier(.22,1,.36,1);z-index:80}.settings-menu.open{opacity:1;visibility:visible;transform:none}.settings-title{font-size:11px;color:#777d88;text-transform:uppercase;letter-spacing:1.4px;margin:3px 5px 12px}.settings-label{font-size:13px;font-weight:700;margin:0 5px 9px}.theme-options{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}.theme-option{border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.045);color:#aab0ba;padding:9px 4px;border-radius:12px;font-size:11px;font-weight:700;cursor:pointer;transition:.2s}.theme-option:hover{color:#fff;background:rgba(255,255,255,.08)}.theme-option.active{color:#111;background:linear-gradient(135deg,#fff,#ddd);border-color:rgba(255,255,255,.4)}.settings-soon{margin:13px 3px 2px;padding-top:12px;border-top:1px solid rgba(255,255,255,.07);text-align:center;color:#68707b;font-size:10px;letter-spacing:.3px}.vip-light{color:#171717;background:#f4f5f5}.vip-light body{background:radial-gradient(circle at 50% 0%,rgba(245,199,106,.18),transparent 34%),linear-gradient(145deg,#f8f9fa,#e9edf0 55%,#f8f9fa);color:#151515}.vip-light .nav{background:rgba(255,255,255,.7);border-color:rgba(0,0,0,.1);box-shadow:0 20px 70px rgba(0,0,0,.12),inset 0 1px rgba(255,255,255,.9)}.vip-light .brand{color:#111}.vip-light .brand small,.vip-light .hero p,.vip-light .head p,.vip-light .card p,.vip-light .final p{color:#626b76}.vip-light .card{background:rgba(255,255,255,.58);border-color:rgba(0,0,0,.09);box-shadow:inset 0 1px rgba(255,255,255,.9),0 25px 70px rgba(0,0,0,.1)}.vip-light .settings-menu{background:rgba(255,255,255,.9);border-color:rgba(0,0,0,.1);box-shadow:0 22px 70px rgba(0,0,0,.18)}.vip-light .settings-title,.vip-light .settings-soon{color:#858b92}.vip-light .theme-option{color:#666;background:rgba(0,0,0,.035);border-color:rgba(0,0,0,.07)}.vip-light .theme-option:hover{color:#111;background:rgba(0,0,0,.07)}.vip-light .theme-option.active{color:#fff;background:#171717}.theme-transition,.theme-transition *{transition:background-color .65s cubic-bezier(.22,1,.36,1),color .45s cubic-bezier(.22,1,.36,1),border-color .5s cubic-bezier(.22,1,.36,1),box-shadow .6s cubic-bezier(.22,1,.36,1)!important}.theme-transition:after{content:"";position:fixed;inset:-30%;z-index:999;pointer-events:none;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.22),rgba(255,255,255,0) 60%);animation:themeRipple .75s cubic-bezier(.22,1,.36,1) forwards}@keyframes themeRipple{from{transform:scale(.05);opacity:.9}to{transform:scale(1.5);opacity:0}}
-</style>
+<script>
+window.location.replace("/#vip");
+</script>
 </head>
 <body>
-<script>
-const OPEN_AT = new Date("2026-10-07T19:23:00+02:00").getTime();
-if (Date.now() < OPEN_AT) window.location.replace("/countdown/");
-</script>
-
-<div class="ambient"><div class="orb a"></div><div class="orb b"></div><div class="orb c"></div></div>
-<header class="nav">
-<a class="brand" href="/"><img src="https://cdn.discordapp.com/attachments/1516127870882287729/1557409458269978754/Logo_A_orange_fluide_sur_fond_noir.png?backend=b2&ex=6ac7b216&is=6ac66096&hm=f5670ed2c168c421ee847215c7dc5c7133711a25aab0ff8aafa9de4ad6f2d8b4&v=20261007-1710" alt="Andreas Music Hub"><span><strong>Andreas Music Hub</strong><small>VIP • V1.2.1</small></span></a>
-<div style="display:flex;align-items:center;gap:8px"><div class="settings-wrap"><button class="settings-btn" id="settings-btn" aria-label="Settings" aria-expanded="false" onclick="toggleSettings()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 15.2a3.2 3.2 0 1 0 0-6.4 3.2 3.2 0 0 0 0 6.4Z"/><path d="m19.4 15 .1.1a1.9 1.9 0 0 1-2.7 2.7l-.1-.1a1.9 1.9 0 0 0-3.2 1.3v.2a1.9 1.9 0 0 1-3.8 0V19a1.9 1.9 0 0 0-3.2-1.3l-.1.1a1.9 1.9 0 0 1-2.7-2.7l.1-.1A1.9 1.9 0 0 0 2.5 12a1.9 1.9 0 0 0 1.3-3.2l-.1-.1a1.9 1.9 0 0 1 2.7-2.7l.1.1A1.9 1.9 0 0 0 9.7 4.8v-.2a1.9 1.9 0 0 1 3.8 0v.2a1.9 1.9 0 0 0 3.2 1.3l.1-.1a1.9 1.9 0 0 1 2.7 2.7l-.1.1A1.9 1.9 0 0 0 20.5 12a1.9 1.9 0 0 0-1.1 3Z"/></svg></button><div class="settings-menu" id="settings-menu"><div class="settings-title">Settings</div><div class="settings-label">Theme</div><div class="theme-options"><button class="theme-option" data-theme="dark" onclick="setTheme('dark')">Dark</button><button class="theme-option" data-theme="light" onclick="setTheme('light')">Light</button><button class="theme-option" data-theme="system" onclick="setTheme('system')">System</button></div><div class="settings-soon">More settings soon!</div></div></div><a class="back" href="/">← Go back to Andreas Music Hub</a></div>
-</header>
-<main>
-<section class="hero">
-<div>
-<div class="kicker">Exclusive membership • VIP</div>
-<h1>VIP.</h1>
-<p>Unlock a more exclusive side of Andreas Music Hub. VIP is built for members who want extra privileges, earlier access, new spaces and special treatment inside the community.</p>
-<div class="actions"><a class="buy disabled" href="#" aria-disabled="true" onclick="return false;">Buy VIP for $2</a></div>
-<div style="margin-top:13px;color:#707680;font-size:10px;letter-spacing:.6px">Purchases are currently unavailable.</div>
-</div>
-</section>
-<section>
-<div class="head"><div class="kicker">What you get</div><h2>More access.<br><span style="background:linear-gradient(115deg,#fff,var(--diamond),var(--gold));-webkit-background-clip:text;color:transparent">More privileges.</span></h2><p>VIP is designed to add meaningful perks without turning the community into a paywall simulator. Humanity has suffered enough of those.</p></div>
-<div class="grid">
-<article class="card"><div class="icon">◇</div><h3>Exclusive VIP channels</h3><p>Access new private text and voice spaces reserved for VIP members and special community conversations.</p></article>
-<article class="card"><div class="icon">✦</div><h3>More privileges</h3><p>Receive additional server privileges and a distinct VIP role that makes your status immediately recognizable.</p></article>
-<article class="card"><div class="icon">◈</div><h3>Early access</h3><p>Get access to selected events, activities, announcements and future features before everyone else.</p></article>
-<article class="card"><div class="icon">♢</div><h3>VIP-only events</h3><p>Special activities and occasional events can be created specifically for VIP members.</p></article>
-<article class="card"><div class="icon">✧</div><h3>Exclusive surprises</h3><p>Future VIP drops, rewards and community surprises can be reserved for members of the program.</p></article>
-<article class="card"><div class="icon">∞</div><h3>Growing benefits</h3><p>As Andreas Music Hub evolves, the VIP package can gain new perks and features without changing its core price.</p></article>
-</div>
-<div class="highlight"><strong>VIP is only $2</strong><span>A small one-time-style entry price is planned for the VIP experience. The payment button is intentionally inactive for now while the system is being prepared.</span></div>
-</section>
-<section class="final">
-<div class="kicker">The VIP experience</div><h2>Be there <span style="background:linear-gradient(115deg,#fff,var(--diamond),var(--gold));-webkit-background-clip:text;color:transparent">before everyone.</span></h2><p>Early access, private spaces, exclusive activities and more. VIP is the premium layer of Andreas Music Hub, while the main community remains open to everyone.</p>
-<div class="actions"><a class="buy disabled" href="#" aria-disabled="true" onclick="return false;">Buy VIP for $2</a><a class="back" href="/">Go back to Andreas Music Hub</a></div>
-</section>
-</main>
-<footer><span>© 2026 <b>Andreas Music Hub</b> • VIP V1.2.1</span><span>Gold × Diamond ✦</span></footer>
-<script>
-const THEME_KEY='amh-theme';function resolvedTheme(theme){return theme==='system'?(matchMedia('(prefers-color-scheme: light)').matches?'light':'dark'):theme}function applyTheme(theme,animate=true){const root=document.documentElement;const resolved=resolvedTheme(theme);if(animate){root.classList.add('theme-transition');setTimeout(()=>root.classList.remove('theme-transition'),800)}root.classList.toggle('vip-light',resolved==='light');localStorage.setItem(THEME_KEY,theme);document.querySelectorAll('.theme-option').forEach(b=>b.classList.toggle('active',b.dataset.theme===theme))}function setTheme(theme){applyTheme(theme,true)}function toggleSettings(){const m=document.getElementById('settings-menu'),b=document.getElementById('settings-btn');const o=!m.classList.contains('open');m.classList.toggle('open',o);b.classList.toggle('open',o);b.setAttribute('aria-expanded',o)}document.addEventListener('click',e=>{const w=document.querySelector('.settings-wrap');if(w&&!w.contains(e.target)){document.getElementById('settings-menu')?.classList.remove('open');document.getElementById('settings-btn')?.classList.remove('open')}});const savedTheme=localStorage.getItem(THEME_KEY)||'dark';applyTheme(savedTheme,false);matchMedia('(prefers-color-scheme: light)').addEventListener('change',()=>{if((localStorage.getItem(THEME_KEY)||'dark')==='system')applyTheme('system',true)});
-</script></body>
+<a href="/#vip">VIP — Andreas Music Hub</a>
+</body>
 </html>
