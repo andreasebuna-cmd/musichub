@@ -870,11 +870,10 @@ const searchDestinations = [
   {id:"dj-andrs",title:"DJ ANDRS",meta:"Open the separate DJ ANDRS website",icon:"♫",external:"https://dj-andrs.pages.dev/"}
 ];
 
-const mainMenuDestinations = searchDestinations;
 function renderMainMenu(){
   const menu=document.getElementById("main-menu-list");
   if(!menu)return;
-  menu.innerHTML=mainMenuDestinations.map(item=>`<button class="main-menu-item" type="button" data-menu-id="${item.id}"><span class="main-menu-icon">${item.icon}</span><span class="main-menu-copy"><span class="main-menu-title">${item.title}</span><span class="main-menu-meta">${item.meta}</span></span></button>`).join("");
+  menu.innerHTML=searchDestinations.map(item=>`<button class="main-menu-item" type="button" data-menu-id="${item.id}"><span class="main-menu-icon">${item.icon}</span><span class="main-menu-copy"><span class="main-menu-title">${item.title}</span><span class="main-menu-meta">${item.meta}</span></span></button>`).join("");
   menu.querySelectorAll("[data-menu-id]").forEach(button=>button.addEventListener("click",()=>handleMainMenuDestination(button.dataset.menuId)));
   syncMainMenuActive();
 }
@@ -895,7 +894,7 @@ function closeMainMenu(){
   menu.classList.remove("open");button.setAttribute("aria-expanded","false");menu.setAttribute("aria-hidden","true");
 }
 function handleMainMenuDestination(id){
-  const item=mainMenuDestinations.find(entry=>entry.id===id); if(!item)return;
+  const item=searchDestinations.find(entry=>entry.id===id); if(!item)return;
   closeMainMenu();
   if(item.external){if(item.id==="dj-andrs"){openSiteWarning();return}window.open(item.external,"_blank","noopener,noreferrer");return}
   showPage(item.id);
