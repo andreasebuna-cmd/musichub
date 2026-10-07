@@ -401,7 +401,7 @@ body.vip-mode .vip-page .kicker,body.vip-mode .vip-page .icon{color:#f5c76a}
 
 .main-menu{position:fixed;z-index:59;top:74px;left:18px;width:330px;max-height:min(680px,calc(100vh - 92px));overflow-y:auto;padding:14px;border:1px solid var(--border);border-radius:24px;background:rgba(14,13,12,.56);box-shadow:0 18px 60px rgba(0,0,0,.34),inset 0 1px 0 rgba(255,255,255,.07);backdrop-filter:blur(26px) saturate(145%);-webkit-backdrop-filter:blur(26px) saturate(145%);opacity:0;visibility:hidden;pointer-events:none;transform:translateY(-10px) scale(.97);transform-origin:top left;transition:opacity .3s var(--ease),transform .4s var(--ease),visibility .3s var(--ease);scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.18) transparent}
 .main-menu.open{opacity:1;visibility:visible;pointer-events:auto;transform:translateY(0) scale(1)}
-.main-menu-head{padding:8px 9px 12px;border-bottom:1px solid rgba(255,255,255,.07);margin-bottom:7px}.main-menu-head .kicker{margin-bottom:3px}.main-menu-head>span{display:block;color:#77736f;font-size:10px}
+.main-menu-head{padding:8px 9px 12px;border-bottom:1px solid rgba(255,255,255,.07);margin-bottom:7px;display:flex;align-items:center;justify-content:space-between;gap:12px}.main-menu-head>div{min-width:0}.main-menu-head .kicker{margin-bottom:3px}.main-menu-subtitle{display:block;color:#77736f;font-size:10px}.main-menu-settings{display:flex;align-items:center;gap:6px;padding:5px 0;border:0;background:transparent;color:#8d8984;cursor:pointer;font:700 10px inherit;white-space:nowrap;transition:color .22s var(--ease),transform .22s var(--ease)}.main-menu-settings span{font-size:12px}.main-menu-settings:hover,.main-menu-settings:focus-visible{color:#eee;transform:translateY(-1px);outline:0}
 .main-menu-list{display:flex;flex-direction:column;gap:4px}.main-menu-item{width:100%;display:flex;align-items:center;gap:12px;padding:12px;border:1px solid transparent;border-radius:14px;background:transparent;color:#eee;text-align:left;cursor:pointer;transition:background .28s var(--ease),transform .28s var(--ease),border-color .28s var(--ease),box-shadow .28s var(--ease)}
 .main-menu-item:hover,.main-menu-item:focus-visible{background:rgba(255,106,0,.09);border-color:rgba(255,106,0,.12);transform:translateX(3px);box-shadow:inset 2px 0 rgba(255,106,0,.45);outline:0}.main-menu-item.active{background:rgba(255,106,0,.08);border-color:rgba(255,106,0,.1)}
 .main-menu-icon{width:36px;height:36px;flex:0 0 36px;display:grid;place-items:center;border-radius:11px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);color:#ff9a55;font-size:13px;font-weight:900}.main-menu-copy{min-width:0;display:flex;flex-direction:column;gap:3px}.main-menu-title{font-size:12px;font-weight:800}.main-menu-meta{font-size:10px;color:#77736f;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -409,11 +409,16 @@ body.vip-mode .main-menu{border-color:rgba(245,199,106,.2);background:rgba(17,16
 body.vip-mode .main-menu-item:hover,body.vip-mode .main-menu-item:focus-visible{background:rgba(245,199,106,.1);border-color:rgba(245,199,106,.15);box-shadow:inset 2px 0 rgba(245,199,106,.5)}
 body.vip-mode .main-menu-item.active{background:rgba(245,199,106,.08);border-color:rgba(245,199,106,.14)}
 body.vip-mode .main-menu-icon{color:#f5c76a;background:rgba(245,199,106,.07);border-color:rgba(245,199,106,.15)}
-body.vip-mode .main-menu-head{border-bottom-color:rgba(245,199,106,.1)}
+body.vip-mode .main-menu-head{border-bottom-color:rgba(245,199,106,.1)} body.vip-mode .main-menu-settings{color:#d8b66c} body.vip-mode .main-menu-settings:hover,body.vip-mode .main-menu-settings:focus-visible{color:#fff0ad}
 body.vip-mode .top-menu-btn{border-color:rgba(245,199,106,.18);background:rgba(17,16,13,.58);box-shadow:0 18px 60px rgba(0,0,0,.34),inset 0 1px 0 rgba(255,245,190,.09)}
 body.vip-mode .top-menu-btn:hover{background:rgba(245,199,106,.08);border-color:rgba(245,199,106,.25)}
 body.vip-mode .top-menu-btn span{background:#f5c76a}
 @media(max-width:520px){.main-menu{top:62px;left:10px;width:calc(100vw - 20px);max-height:calc(100vh - 78px);border-radius:20px}}
+/* Light-mode coverage */
+.theme-light .top-menu-btn,.theme-light .main-menu{background:rgba(255,255,255,.72);border-color:rgba(0,0,0,.1);box-shadow:0 18px 60px rgba(0,0,0,.12),inset 0 1px rgba(255,255,255,.9)}
+.theme-light .top-menu-btn span{background:#555}.theme-light .top-menu-btn:hover{background:rgba(255,255,255,.9);border-color:rgba(0,0,0,.16)}.theme-light .top-menu-btn:hover span{background:#111}
+.theme-light .main-menu-head{border-bottom-color:rgba(0,0,0,.08)}.theme-light .main-menu-subtitle,.theme-light .main-menu-meta{color:#6d6a66}.theme-light .main-menu-title{color:#171717}.theme-light .main-menu-item{color:#171717}.theme-light .main-menu-item:hover,.theme-light .main-menu-item:focus-visible{background:rgba(255,106,0,.08);border-color:rgba(255,106,0,.14);box-shadow:inset 2px 0 rgba(255,106,0,.4)}.theme-light .main-menu-item.active{background:rgba(255,106,0,.07);border-color:rgba(255,106,0,.12)}.theme-light .main-menu-icon{background:rgba(0,0,0,.045);border-color:rgba(0,0,0,.08)}.theme-light .main-menu-settings{color:#5f5b56}.theme-light .main-menu-settings:hover,.theme-light .main-menu-settings:focus-visible{color:#111}
+.theme-light .nav-search{background:rgba(0,0,0,.035);border-color:rgba(0,0,0,.1)}.theme-light .nav-search input{color:#171717}.theme-light .nav-search input::placeholder{color:#777}.theme-light .nav-search svg{color:#666}.theme-light .search-suggestions{background:rgba(255,255,255,.74);border-color:rgba(0,0,0,.1);box-shadow:0 18px 60px rgba(0,0,0,.12),inset 0 1px rgba(255,255,255,.9)}.theme-light .search-suggestion{color:#171717}.theme-light .search-suggestion-meta{color:#6d6a66}.theme-light .search-suggestion-icon{background:rgba(0,0,0,.045);border-color:rgba(0,0,0,.08)}
 </style>
 </head>
 
@@ -425,7 +430,7 @@ body.vip-mode .top-menu-btn span{background:#f5c76a}
   <span></span><span></span><span></span>
 </button>
 <div class="main-menu" id="main-menu" aria-hidden="true">
-  <div class="main-menu-head"><div class="kicker">Navigation</div><span>Explore the site</span></div>
+  <div class="main-menu-head"><div><div class="kicker">Navigation</div><span class="main-menu-subtitle">Explore the site</span></div><button class="main-menu-settings" type="button" aria-label="Settings" onclick="handleMainMenuDestination('settings')"><span>⚙</span><b>Settings</b></button></div>
   <div class="main-menu-list" id="main-menu-list"></div>
 </div>
 
@@ -842,6 +847,7 @@ function translateSite(){
   }
   document.documentElement.lang=lang;
   updateLanguageMenu(lang);
+  renderMainMenu();
 }
 function setLanguage(language){
   localStorage.setItem(LANGUAGE_KEY,language);
@@ -873,7 +879,14 @@ const searchDestinations = [
 function renderMainMenu(){
   const menu=document.getElementById("main-menu-list");
   if(!menu)return;
-  menu.innerHTML=searchDestinations.map(item=>`<button class="main-menu-item" type="button" data-menu-id="${item.id}"><span class="main-menu-icon">${item.icon}</span><span class="main-menu-copy"><span class="main-menu-title">${item.title}</span><span class="main-menu-meta">${item.meta}</span></span></button>`).join("");
+  const lang=localStorage.getItem(LANGUAGE_KEY)||"en";
+  const dict=I18N[lang]||{};
+  const label=(key,fallback)=>dict[key]||fallback;
+  menu.innerHTML=searchDestinations.filter(item=>item.id!=="settings").map(item=>"<button class=\"main-menu-item\" type=\"button\" data-menu-id=\""+item.id+"\"><span class=\"main-menu-icon\">"+item.icon+"</span><span class=\"main-menu-copy\"><span class=\"main-menu-title\">"+label(item.title,item.title)+"</span><span class=\"main-menu-meta\">"+label(item.meta,item.meta)+"</span></span></button>").join("");
+  const settingsButton=document.querySelector(".main-menu-settings");
+  if(settingsButton){settingsButton.querySelector("b").textContent=label("Settings","Settings");settingsButton.setAttribute("aria-label",label("Settings","Settings"))}
+  const subtitle=document.querySelector(".main-menu-subtitle");
+  if(subtitle)subtitle.textContent=label("Explore the site","Explore the site");
   menu.querySelectorAll("[data-menu-id]").forEach(button=>button.addEventListener("click",()=>handleMainMenuDestination(button.dataset.menuId)));
   syncMainMenuActive();
 }
