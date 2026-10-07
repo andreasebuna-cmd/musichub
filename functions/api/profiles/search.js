@@ -20,7 +20,7 @@ export async function onRequestGet({request,env}){
         if(!profile.guildMember||(!username.toLowerCase().includes(q)&&!displayName.toLowerCase().includes(q)))continue;
         profiles.push({
           id:String(profile.id),
-          username,
+          username:profile.privacy==="public"?username:"",
           displayName,
           avatar:String(profile.avatar||""),
           privacy:profile.privacy==="public"?"public":"private"
