@@ -34,6 +34,11 @@ footer{padding:25px 0 35px;border-top:1px solid rgba(255,255,255,.07);color:#686
 </style>
 </head>
 <body>
+<script>
+const OPEN_AT = new Date("2026-10-07T20:45:00+02:00").getTime();
+if (Date.now() < OPEN_AT) window.location.replace("/countdown/");
+</script>
+
 <div class="ambient"><div class="orb a"></div><div class="orb b"></div><div class="orb c"></div></div>
 <header class="nav">
 <a class="brand" href="/"><img src="https://cdn.discordapp.com/attachments/1516127870882287729/1557409458269978754/Logo_A_orange_fluide_sur_fond_noir.png?backend=b2&ex=6ac7b216&is=6ac66096&hm=f5670ed2c168c421ee847215c7dc5c7133711a25aab0ff8aafa9de4ad6f2d8b4&v=20261007-1710" alt="Andreas Music Hub"><span><strong>Andreas Music Hub</strong><small>VIP • V1.2.1</small></span></a>
