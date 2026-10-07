@@ -16,10 +16,12 @@ export async function onRequestGet({request,env}){
       try{
         const profile=JSON.parse(raw);
         const username=String(profile.username||"");
-        if(!profile.guildMember||!username.toLowerCase().includes(q))continue;
+        const displayName=String(profile.displayName||"");
+        if(!profile.guildMember||(!username.toLowerCase().includes(q)&&!displayName.toLowerCase().includes(q)))continue;
         profiles.push({
           id:String(profile.id),
           username,
+          displayName,
           avatar:String(profile.avatar||""),
           privacy:profile.privacy==="public"?"public":"private"
         });
