@@ -24,6 +24,7 @@ export async function onRequestPost({request,env}){
   try{if(existingRaw)existing=JSON.parse(existingRaw)}catch(error){}
   let roleNames=Array.isArray(existing.roleNames)?existing.roleNames:[];
   const roles=Array.isArray(member.roles)?member.roles.map(String):[];
+  const displayName=String(member?.user?.global_name||session.user.displayName||"");
   if(env.DISCORD_BOT_TOKEN){
     try{
       const guildRoles=await discordGuildRoles(env.DISCORD_BOT_TOKEN);
@@ -34,7 +35,7 @@ export async function onRequestPost({request,env}){
   const profile={
     id:String(session.user.id),
     username:String(session.user.username||""),
-    displayName:String(session.user.displayName||""),
+    displayName,
     avatar:String(session.user.avatar||""),
     guildMember:true,
     roles,
