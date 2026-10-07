@@ -1,7 +1,7 @@
 import {
   DISCORD_CLIENT_ID,DISCORD_GUILD_ID,STATE_COOKIE,SESSION_COOKIE,
   redirectUri,cookieValue,cookieHeader,clearCookieHeader,json,
-  discordFetch,discordUser,discordGuildMember,avatarUrl,encryptSession
+  discordFetch,discordUser,discordGuildMember,discordGuildRoles,avatarUrl,encryptSession
 } from "../../_discord.js";
 
 export async function onRequestGet({request,env}){
@@ -42,12 +42,19 @@ export async function onRequestGet({request,env}){
   }
 
   const roles=Array.isArray(member.roles)?member.roles.map(String):[];
+  let roleNames=[];
+  try{
+    const guildRoles=await discordGuildRoles(env.DISCORD_BOT_TOKEN);
+    const roleMap=new Map(Array.isArray(guildRoles)?guildRoles.map(role=>[String(role.id),String(role.name||"")]):[]);
+    roleNames=roles.map(roleId=>roleMap.get(roleId)).filter(Boolean);
+  }catch(error){}
   const sessionUser={
     id:String(user.id),
     username:String(user.username||""),
     avatar:avatarUrl(user),
     guildMember:true,
-    roles
+    roles,
+    roleNames
   };
   const session=await encryptSession({user:sessionUser,guildId:DISCORD_GUILD_ID},env.SESSION_SECRET);
   const headers=new Headers({Location:"/#home","Cache-Control":"no-store"});
