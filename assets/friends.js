@@ -121,6 +121,20 @@
     window.setDiscordUser=function(user){original(user);setTimeout(function(){loadNotifications(false)},50)};
     window.setDiscordUser.__friendsPatched=true;
   }
+  var notificationStream=null;
+  function connectNotificationStream(){
+    if(!auth()||typeof EventSource==="undefined")return;
+    if(notificationStream){try{notificationStream.close()}catch(e){}}
+    try{
+      notificationStream=new EventSource("/api/notifications/stream");
+      notificationStream.onmessage=function(){loadNotifications(true)};
+      notificationStream.onerror=function(){
+        if(notificationStream){try{notificationStream.close()}catch(e){}}
+        notificationStream=null;
+        if(auth())setTimeout(connectNotificationStream,1800);
+      };
+    }catch(e){notificationStream=null}
+  }
   function init(){
     css();addBell();addPanels();patchProfile();patchSession();
     document.addEventListener("click",function(e){var p=document.getElementById("notification-panel");if(p&&!e.target.closest("#notification-panel")&&!e.target.closest("#notification-btn"))p.classList.remove("open")});
