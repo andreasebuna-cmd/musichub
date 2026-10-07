@@ -1039,7 +1039,7 @@ function renderViewedProfile(profile){
         <img class="profile-avatar" src="${escapeHtml(profile.avatar||"https://cdn.discordapp.com/embed/avatars/0.png")}" alt="">
         <div>
           <div class="profile-status"><span class="profile-status-dot"></span>${translateText("Connected to Music Hub")}</div>
-          <h3 class="profile-name">${escapeHtml(profile.username||profile.id)}</h3>
+          <h3 class="profile-name">${escapeHtml(profile.privacy==="private"&&!isOwner?(profile.displayName||"Private Username"):(profile.displayName||profile.username||profile.id))}</h3>
           <p class="profile-sub">${translateText("Discord account")}</p>
         </div>
       </div>
@@ -1252,7 +1252,7 @@ async function renderSearchSuggestions(query=""){
       const response=await fetch("/api/profiles/search?q="+encodeURIComponent(q),{credentials:"same-origin",cache:"no-store"});
       if(response.ok){
         const data=await response.json();
-        html+=Array.isArray(data.profiles)?data.profiles.map(profile=>`<button class="search-suggestion" type="button" role="option" data-profile-id="${escapeHtml(profile.id)}"><img class="search-suggestion-icon" style="object-fit:cover;padding:0;border-radius:11px" src="${escapeHtml(profile.avatar||"https://cdn.discordapp.com/embed/avatars/0.png")}" alt=""><span class="search-suggestion-copy"><span class="search-suggestion-title">${escapeHtml(profile.username)}</span><span class="search-suggestion-meta">Music Hub member • ${profile.privacy==="public"?"Public":"Private"} profile</span></span></button>`).join(""):"";
+        html+=Array.isArray(data.profiles)?data.profiles.map(profile=>`<button class="search-suggestion" type="button" role="option" data-profile-id="${escapeHtml(profile.id)}"><img class="search-suggestion-icon" style="object-fit:cover;padding:0;border-radius:11px" src="${escapeHtml(profile.avatar||"https://cdn.discordapp.com/embed/avatars/0.png")}" alt=""><span class="search-suggestion-copy"><span class="search-suggestion-title">${escapeHtml(profile.privacy==="private"?(profile.displayName||"Private Username"):(profile.displayName||profile.username||"Private Username"))}</span><span class="search-suggestion-meta">Music Hub member • ${profile.privacy==="public"?"Public":"Private"} profile</span></span></button>`).join(""):"";
       }
     }catch(error){}
   }
