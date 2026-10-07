@@ -25,7 +25,6 @@ export async function onRequestGet({request,env}){
   if(env.DISCORD_BOT_TOKEN){try{const liveMember=await discordGuildMember(id,env.DISCORD_BOT_TOKEN);displayName=String(liveMember?.user?.global_name||displayName||"")}catch(error){}}
   const publicProfile={
     id:String(profile.id),
-    username:String(profile.username||""),
     displayName,
     avatar:String(profile.avatar||""),
     guildMember:true,
@@ -33,6 +32,7 @@ export async function onRequestGet({request,env}){
     friendship:isOwner?"self":(areFriends?"friends":"none")
   };
   if(profile.privacy==="public"||isOwner||areFriends){
+    publicProfile.username=String(profile.username||"");
     publicProfile.roles=Array.isArray(profile.roles)?profile.roles:[];
     publicProfile.roleNames=Array.isArray(profile.roleNames)?profile.roleNames:[];
     publicProfile.onlineStatus="Online status unavailable";
