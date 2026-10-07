@@ -1012,6 +1012,16 @@ function renderDiscordNavigation(){
     if(!action.dataset.discordActionBound){action.addEventListener("click",handleDiscordAction);action.dataset.discordActionBound="true";}
   }
   renderMainMenu();
+
+(async function loadDiscordSession(){
+  try{
+    const response=await fetch("/api/auth/me",{credentials:"same-origin",cache:"no-store"});
+    if(!response.ok)return;
+    const data=await response.json();
+    if(data&&data.authenticated&&data.user)window.setDiscordUser(data.user);
+    else window.setDiscordUser(null);
+  }catch(error){}
+})();
 }
 function handleDiscordAction(event){
   if(!isDiscordGuildMember())return;
