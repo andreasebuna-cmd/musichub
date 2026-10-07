@@ -22,6 +22,22 @@ export async function onRequestGet({request,env}){
     }
   }catch(error){}
 
+  if(user.guildMember&&env.PROFILE_KV){
+    const existingRaw=await env.PROFILE_KV.get("profile:"+user.id);
+    let existing={};
+    try{if(existingRaw)existing=JSON.parse(existingRaw)}catch(error){}
+    await env.PROFILE_KV.put("profile:"+user.id,JSON.stringify({
+      id:user.id,
+      username:user.username,
+      avatar:user.avatar,
+      guildMember:true,
+      roles:user.roles||[],
+      roleNames:user.roleNames||[],
+      privacy:existing.privacy==="public"?"public":"private",
+      updatedAt:new Date().toISOString()
+    }));
+  }
+
   const updatedSession=await encryptSession({user,guildId:session.guildId},env.SESSION_SECRET);
   const headers=new Headers();
   headers.append("Set-Cookie",cookieHeader(SESSION_COOKIE,updatedSession,60*60*24*7));
