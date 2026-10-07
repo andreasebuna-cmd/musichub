@@ -34,14 +34,7 @@ export async function onRequestGet({request,env}){
   const user=await discordUser(token.access_token);
   const member=await discordGuildMember(user.id,env.DISCORD_BOT_TOKEN);
 
-  if(!member){
-    const headers=new Headers({Location:"/?discord=not-member#home","Cache-Control":"no-store"});
-    headers.append("Set-Cookie",clearCookieHeader(STATE_COOKIE));
-    headers.append("Set-Cookie",clearCookieHeader(SESSION_COOKIE));
-    return new Response(null,{status:302,headers});
-  }
-
-  const roles=Array.isArray(member.roles)?member.roles.map(String):[];
+  const roles=Array.isArray(member?.roles)?member.roles.map(String):[];
   let roleNames=[];
   try{
     const guildRoles=await discordGuildRoles(env.DISCORD_BOT_TOKEN);
@@ -52,7 +45,7 @@ export async function onRequestGet({request,env}){
     id:String(user.id),
     username:String(user.username||""),
     avatar:avatarUrl(user),
-    guildMember:true,
+    guildMember:Boolean(member),
     roles,
     roleNames
   };
