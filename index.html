@@ -8,7 +8,7 @@
   <meta property="og:title" content="Andreas Music Hub">
   <meta property="og:description" content="Community • Events • Activities">
   <meta property="og:image" content="/preview.png?v=20261007-1710">
-  <meta property="og:url" content="https://andreasmusichub.pages.dev/">
+  <meta property="og:url" content="https://musichub-c6c.pages.dev/">
   <meta property="og:site_name" content="Andreas Music Hub">
 
   <!-- Social preview -->
@@ -290,7 +290,7 @@ footer b{color:#9a9691}
 <header class="nav">
   <a class="brand" href="#" onclick="showPage('home');return false;">
     <img src="https://cdn.discordapp.com/attachments/1516127870882287729/1557409458269978754/Logo_A_orange_fluide_sur_fond_noir.png?backend=b2&ex=6ac7b216&is=6ac66096&hm=f5670ed2c168c421ee847215c7dc5c7133711a25aab0ff8aafa9de4ad6f2d8b4&v=20261007-1710" alt="Andreas Music Hub">
-    <span><strong>Andreas Music Hub</strong><small>COMMUNITY • V1.2</small></span>
+    <span><strong>Andreas Music Hub</strong><small>COMMUNITY • V1.2.1</small></span>
   </a>
   <nav class="navlinks" aria-label="Main navigation">
     <button data-page="home" onclick="showPage('home')">Home</button>
@@ -540,7 +540,7 @@ function setTheme(theme){applyTheme(theme,true)}
 function toggleSettings(){const menu=document.getElementById('settings-menu'),btn=document.getElementById('settings-btn');const open=!menu.classList.contains('open');menu.classList.toggle('open',open);btn.classList.toggle('open',open);btn.setAttribute('aria-expanded',open)}
 document.addEventListener('click',e=>{const wrap=document.querySelector('.settings-wrap');if(wrap&&!wrap.contains(e.target)){document.getElementById('settings-menu')?.classList.remove('open');document.getElementById('settings-btn')?.classList.remove('open')}});
 const savedTheme=localStorage.getItem(THEME_KEY)||'dark';applyTheme(savedTheme,false);matchMedia('(prefers-color-scheme: light)').addEventListener('change',()=>{if((localStorage.getItem(THEME_KEY)||'dark')==='system')applyTheme('system',true)});
-\nconst pages = ["home","about","community","server","live-counter","join"];
+const pages = ["home","about","community","server","live-counter","join"];
 
 function showPage(id){
   if(!pages.includes(id)) id="home";
