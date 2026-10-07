@@ -878,7 +878,7 @@ const searchDestinations = [
 function renderMainMenu(){
   const menu=document.getElementById("main-menu-list");
   if(!menu)return;
-  menu.innerHTML=searchDestinations.map(item=>`<button class="main-menu-item" type="button" data-menu-id="${item.id}"><span class="main-menu-icon">${item.icon}</span><span class="main-menu-copy"><span class="main-menu-title">${item.title}</span><span class="main-menu-meta">${item.meta}</span></span></button>`).join("");
+  menu.innerHTML=searchDestinations.filter(item=>item.id!=="settings").map(item=>`<button class="main-menu-item" type="button" data-menu-id="${item.id}"><span class="main-menu-icon">${item.icon}</span><span class="main-menu-copy"><span class="main-menu-title">${item.title}</span><span class="main-menu-meta">${item.meta}</span></span></button>`).join("");
   menu.querySelectorAll("[data-menu-id]").forEach(button=>button.addEventListener("click",()=>handleMainMenuDestination(button.dataset.menuId)));
   syncMainMenuActive();
 }
