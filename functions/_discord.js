@@ -89,6 +89,11 @@ async function discordGuildMember(userId,botToken){
   if(!response.ok)throw new Error("Discord guild member lookup failed: "+response.status);
   return response.json();
 }
+async function discordGuildRoles(botToken){
+  const response=await discordFetch("/guilds/"+DISCORD_GUILD_ID+"/roles",{headers:{Authorization:"Bot "+botToken}});
+  if(!response.ok)throw new Error("Discord guild roles lookup failed: "+response.status);
+  return response.json();
+}
 function avatarUrl(user){
   if(!user.avatar)return "https://cdn.discordapp.com/embed/avatars/0.png";
   return "https://cdn.discordapp.com/avatars/"+user.id+"/"+user.avatar+".png?size=128";
@@ -97,5 +102,5 @@ export {
   DISCORD_CLIENT_ID,DISCORD_GUILD_ID,MODERATION_ROLE_IDS,OAUTH_SCOPES,
   SESSION_COOKIE,STATE_COOKIE,SESSION_TTL,redirectUri,randomBytes,toBase64Url,
   cookieValue,cookieHeader,clearCookieHeader,json,encryptSession,decryptSession,
-  discordFetch,discordUser,discordGuildMember,avatarUrl
+  discordFetch,discordUser,discordGuildMember,discordGuildRoles,avatarUrl
 };
