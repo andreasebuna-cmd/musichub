@@ -218,8 +218,7 @@ h2{font-size:clamp(40px,6vw,72px);letter-spacing:-4px;line-height:.95;margin:13p
 .panel.large{min-height:350px}
 .panel h3{font-size:25px;letter-spacing:-1px;margin:15px 0 9px}
 .panel p{color:#9f9b96;line-height:1.65;font-size:14px}
-.panel{transform-style:preserve-3d;will-change:transform}
-.panel:hover{transform:translateY(-6px) rotateX(1.5deg) rotateY(-1.5deg);border-color:rgba(255,140,70,.28);box-shadow:inset 0 1px rgba(255,255,255,.09),0 30px 80px rgba(0,0,0,.3)}
+
 .statrow{display:flex;gap:10px;margin-top:25px;flex-wrap:wrap}
 .stat{
   padding:14px 17px;border-radius:17px;background:rgba(0,0,0,.22);
@@ -292,7 +291,7 @@ footer b{color:#9a9691}
 <header class="nav">
   <a class="brand" href="#" onclick="showPage('home');return false;">
     <img src="https://cdn.discordapp.com/attachments/1516127870882287729/1557409458269978754/Logo_A_orange_fluide_sur_fond_noir.png?backend=b2&ex=6ac7b216&is=6ac66096&hm=f5670ed2c168c421ee847215c7dc5c7133711a25aab0ff8aafa9de4ad6f2d8b4&v=20261007-1710" alt="Andreas Music Hub">
-    <span><strong>Andreas Music Hub</strong><small>COMMUNITY • V1.2.2</small></span>
+    <span><strong>Andreas Music Hub</strong><small>COMMUNITY • V1.2.3</small></span>
   </a>
   <nav class="navlinks" aria-label="Main navigation">
     <button data-page="home" onclick="showPage('home')">Home</button>
@@ -613,19 +612,7 @@ addEventListener("pointerleave",()=>{
   const card=document.querySelector(".emblem-card");
   if(card && document.getElementById("home")?.classList.contains("active")) card.style.transform="";
 });
-document.addEventListener("pointermove",e=>{
-  const server=document.getElementById("server");
-  if(!server?.classList.contains("active")) return;
-  server.querySelectorAll(".panel").forEach(panel=>{
-    const r=panel.getBoundingClientRect();
-    const dx=(e.clientX-(r.left+r.width/2))/r.width;
-    const dy=(e.clientY-(r.top+r.height/2))/r.height;
-    const inside=Math.abs(dx)<.7&&Math.abs(dy)<.7;
-    panel.style.transform=inside
-      ? `translateY(-6px) rotateX(${dy*-2}deg) rotateY(${dx*3}deg)`
-      : "";
-  });
-});
+
 </script>
 </body>
 </html>
