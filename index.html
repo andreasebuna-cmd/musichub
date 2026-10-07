@@ -954,7 +954,7 @@ const searchDestinations = [
 const DISCORD_CONFIG={
   authEndpoint:"/auth/discord",
   logoutEndpoint:"/auth/discord/logout",
-  moderationRoleId:"MODERATION_ROLE_ID"
+  moderationRoleIds:["1516081430562738296","1516128584173879316","1516128742622101514","1516128860645752832"]
 };
 // The future backend supplies this state through window.setDiscordUser; it is not authentication.
 let discordUser=null;
@@ -964,8 +964,8 @@ function isDiscordGuildMember(){
 }
 // This only controls navigation visibility; the backend must enforce actual moderation access.
 function canSeeDiscordModeration(){
-  const roleId=DISCORD_CONFIG.moderationRoleId;
-  return isDiscordGuildMember()&&roleId&&roleId!=="MODERATION_ROLE_ID"&&Array.isArray(discordUser.roles)&&discordUser.roles.includes(roleId);
+  const roleIds=DISCORD_CONFIG.moderationRoleIds;
+  return isDiscordGuildMember()&&Array.isArray(roleIds)&&Array.isArray(discordUser.roles)&&roleIds.some(roleId=>discordUser.roles.includes(roleId));
 }
 function getDiscordNavigationItems(){
   if(!isDiscordGuildMember())return [];
