@@ -725,12 +725,14 @@ function normalizeText(value){return value.replace(/\s+/g,' ').trim()}
 function translateSite(){
   const lang=localStorage.getItem(LANGUAGE_KEY)||'en';
   const dict=I18N[lang]||{};
+  const normalizedDict={};
+  Object.keys(dict).forEach(key=>{normalizedDict[normalizeText(key)]=dict[key]});
   const walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT);
   let node;
   while(node=walker.nextNode()){
     if(!node.__amhOriginal) node.__amhOriginal=node.nodeValue;
     const key=normalizeText(node.__amhOriginal);
-    if(dict[key]) node.nodeValue=node.__amhOriginal.replace(key,dict[key]);
+    if(normalizedDict[key]) node.nodeValue=node.__amhOriginal.replace(key,normalizedDict[key]);
     else node.nodeValue=node.__amhOriginal;
   }
   document.documentElement.lang=lang;
