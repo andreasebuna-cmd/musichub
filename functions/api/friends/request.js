@@ -19,6 +19,7 @@ export async function onRequestPost({request,env}){
   if(!/^\d{15,25}$/.test(toId)||toId===fromId)return json({error:"Invalid friend target."},400);
   const target=env.DISCORD_BOT_TOKEN?await discordGuildMember(toId,env.DISCORD_BOT_TOKEN):null;
   if(!target)return json({error:"That user is not a Hub member."},404);
+  const blocked=await read(env,"blocked:"+fromId,[]); const targetBlocked=await read(env,"blocked:"+toId,[]); if(blocked.map(String).includes(toId)||targetBlocked.map(String).includes(fromId))return json({error:"This user cannot be contacted."},403);
   const friends=await read(env,"friends:"+fromId,[]);
   const targetFriends=await read(env,"friends:"+toId,[]);
   if(friends.map(String).includes(toId))return json({status:"friends"});
