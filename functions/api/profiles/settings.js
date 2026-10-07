@@ -1,4 +1,4 @@
-import {json,cookieValue,decryptSession,SESSION_COOKIE,discordGuildMember,discordGuildRoles} from "../../_discord.js";
+import {json,cookieValue,decryptSession,SESSION_COOKIE,discordGuildMember} from "../../_discord.js";
 
 export async function onRequestGet({request,env}){
   const session=env.SESSION_SECRET?await decryptSession(cookieValue(request,SESSION_COOKIE),env.SESSION_SECRET):null;
