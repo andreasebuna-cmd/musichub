@@ -160,6 +160,9 @@ body.vip-mode .search-suggestion-icon{color:#f5c76a;background:rgba(245,199,106,
   transition:.25s var(--ease);white-space:nowrap
 }
 .navjoin:hover{transform:translateY(-2px);box-shadow:0 14px 38px rgba(255,94,0,.34)}
+.navjoin-user{display:flex;align-items:center;gap:8px;max-width:min(190px,23vw);min-width:0}
+.navjoin-avatar{width:24px;height:24px;flex:0 0 24px;border-radius:50%;object-fit:cover}
+.navjoin-username{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .connect-discord{
   text-decoration:none;color:#fff;font-weight:900;font-size:11px;letter-spacing:.7px;
   background:linear-gradient(135deg,#ff8a2b,#ff5a00);
@@ -339,6 +342,8 @@ footer b{color:#9a9691}
   .brand strong{font-size:13px}
   .brand small{font-size:9px}
   .navjoin{padding:11px 13px}
+  .navjoin-user{max-width:calc(100vw - 242px);min-width:78px;padding:10px 11px;gap:6px;font-size:11px}
+  .navjoin-avatar{width:22px;height:22px;flex-basis:22px}
   .settings-btn{width:40px;height:40px}
   .nav-actions{gap:6px}
   .hero{min-height:auto;padding-top:30px}
@@ -502,7 +507,7 @@ body.vip-mode .top-menu-btn span{background:#f5c76a}
   <div class="main-menu-head"><div><div class="kicker">Navigation</div><span class="main-menu-subtitle">Explore the site</span></div><button class="main-menu-settings" type="button" aria-label="Settings" onclick="handleMainMenuDestination('settings')"><span>☷</span><b>Settings</b></button></div>
   <div class="main-menu-list" id="main-menu-list"></div>
   <div class="main-menu-divider" aria-hidden="true"></div>
-  <a class="connect-discord main-menu-connect" href="https://discord.gg/yuaaf5YNfE" target="_blank" rel="noopener">CONNECT WITH DISCORD</a>
+  <a class="connect-discord main-menu-connect" id="discord-auth-action" href="/auth/discord">CONNECT WITH DISCORD</a>
 </div>
 
 <header class="nav">
@@ -520,7 +525,7 @@ body.vip-mode .top-menu-btn span{background:#f5c76a}
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 15.2a3.2 3.2 0 1 0 0-6.4 3.2 3.2 0 0 0 0 6.4Z"/><path d="m19.4 15 .1.1a1.9 1.9 0 0 1-2.7 2.7l-.1-.1a1.9 1.9 0 0 0-3.2 1.3v.2a1.9 1.9 0 0 1-3.8 0V19a1.9 1.9 0 0 0-3.2-1.3l-.1.1a1.9 1.9 0 1 1-2.7-2.7l.1-.1A1.9 1.9 0 0 0 2.5 12a1.9 1.9 0 0 0 1.3-3.2l-.1-.1a1.9 1.9 0 0 1 2.7-2.7l.1.1A1.9 1.9 0 0 0 9.7 4.8v-.2a1.9 1.9 0 0 1 3.8 0v.2a1.9 1.9 0 0 0 3.2 1.3l.1-.1a1.9 1.9 0 0 1 2.7 2.7l-.1.1A1.9 1.9 0 0 0 20.5 12a1.9 1.9 0 0 0-1.1 3Z"/></svg>
       </button>
     </div>
-    <a class="navjoin" href="https://discord.gg/yuaaf5YNfE" target="_blank" rel="noopener">Join now ↗</a>
+    <a class="navjoin" id="nav-join" href="https://discord.gg/yuaaf5YNfE" target="_blank" rel="noopener" data-invite-href="https://discord.gg/yuaaf5YNfE" onclick="handleDiscordProfileLink(event)">Join now ↗</a>
   </div>
 </header>
 
@@ -861,6 +866,11 @@ const I18N={
     "COMMUNITY • V1.2.7":"COMMUNITY • V1.2.7","Home":"Startseite","About":"Über uns","Community":"Community","The Server":"Der Server","Live Counter":"Live-Zähler","VIP":"VIP","Join now ↗":"Beitreten ↗","CONNECT WITH DISCORD":"MIT DISCORD VERBINDEN","External website":"Externe Website","You're leaving Andreas Music Hub.":"Du verlässt Andreas Music Hub.","Go back":"Zurück","Okay ↗":"Weiter ↗","Community • Halloween 2026 Event":"Community • Halloween 2026 Event","A place to":"Ein Ort zum","belong.":"Dazugehören.","Join the server ↗":"Server beitreten ↗","Discover the community":"Community entdecken","What we're about":"Worum es geht","More than":"Mehr als ein","a Discord server.":"Discord-Server.","Community first":"Community zuerst","Creative energy":"Kreative Energie","Good atmosphere":"Gute Atmosphäre","The philosophy":"Die Philosophie","Built for people, not numbers.":"Für Menschen gebaut, nicht für Zahlen.","Possibilities":"Möglichkeiten","Online":"Online","The experience":"Das Erlebnis","Events. Community. Surprises.":"Events. Community. Überraschungen.","Explore →":"Entdecken →","The community":"Die Community","Come for the server.":"Komm wegen des Servers.","Stay for the people.":"Bleib wegen der Menschen.","Chat & hangout":"Chatten & abhängen","Share & create":"Teilen & erstellen","Events & activities":"Events & Aktivitäten","Seasonal events":"Saisonale Events","Discover people":"Menschen entdecken","Room to grow":"Raum zum Wachsen","Inside the server":"Im Server","Simple structure.":"Einfache Struktur.","Premium experience.":"Premium-Erlebnis.","Talk. Share. Connect.":"Reden. Teilen. Verbinden.","More than just chatting.":"Mehr als nur chatten.","Something is always coming.":"Es kommt immer etwas Neues.","More to come.":"Mehr kommt noch.","Live statistics":"Live-Statistiken","Server":"Server","live.":"live.","Connecting to Discord…":"Verbindung zu Discord…","Updates automatically":"Automatische Updates","Members":"Mitglieder","Approximate live count from Discord":"Ungefährer Live-Stand von Discord","Bots":"Bots","Your next server":"Dein nächster Server","Ready to":"Bereit,","join us?":"uns beizutreten?","Join Andreas Music Hub ↗":"Andreas Music Hub beitreten ↗","Preferences":"Einstellungen","Site":"Website-","settings.":"Einstellungen.","Appearance":"Darstellung","Theme":"Theme","Choose how the site should look.":"Wähle das Aussehen der Website.","Dark":"Dunkel","Light":"Hell","System":"System","Language":"Sprache","Site language":"Website-Sprache","Choose your preferred language.":"Wähle deine bevorzugte Sprache.","English":"Englisch","Français":"Französisch","Español":"Spanisch","Deutsch":"Deutsch","Designed in":"Designt in","black & orange":"Schwarz & Orange","Exclusive membership • VIP":"Exklusive Mitgliedschaft • VIP","What you get":"Deine Vorteile","More access.":"Mehr Zugang.","More privileges.":"Mehr Vorteile.","Buy VIP for $2":"VIP für 2 $ kaufen","Purchases are currently unavailable.":"Käufe sind derzeit nicht verfügbar.","Exclusive VIP channels":"Exklusive VIP-Kanäle","More privileges":"Mehr Vorteile","Early access":"Früher Zugang","VIP-only events":"VIP-Events","Exclusive surprises":"Exklusive Überraschungen","Growing benefits":"Wachsende Vorteile","VIP is only $2":"VIP kostet nur 2 $","The VIP experience":"Das VIP-Erlebnis","Be there ":"Sei dabei ","before everyone.":"bevor es alle sind."}
 };
 
+/* Discord navigation labels only; existing translations remain unchanged. */
+Object.assign(I18N.fr,{"Profile":"Profil","Moderation":"Modération","LOG OUT":"Se déconnecter"});
+Object.assign(I18N.es,{"Profile":"Perfil","Moderation":"Moderación","LOG OUT":"Cerrar sesión"});
+Object.assign(I18N.de,{"Profile":"Profil","Moderation":"Moderation","LOG OUT":"Abmelden"});
+
 /* Extended translations */
 Object.assign(I18N.fr,{"You are about to open ":"Vous allez ouvrir "," , a separate website. The current page will stay here, but your browser will navigate to the new site.":", un site séparé. La page actuelle restera ici, mais votre navigateur ouvrira le nouveau site.","Welcome to ":"Bienvenue sur "," , a community Discord built around people, conversations, creativity, events and good energy. A place to meet people, hang out and be part of something that keeps growing.":", une communauté Discord pensée autour des personnes, des discussions, de la créativité, des événements et de la bonne énergie. Un endroit pour rencontrer du monde, discuter et faire partie de quelque chose qui grandit.","A space designed around actual conversations and people, not a wall of useless channels.":"Un espace pensé pour de vraies discussions et de vraies personnes, pas un mur de salons inutiles.","Share projects, ideas, media and whatever strange thing you've been working on at 3 AM.":"Partagez vos projets, idées, médias et cette chose étrange sur laquelle vous travailliez à 3 h du matin.","Relaxed, social and constantly evolving, with events and seasonal moments throughout the year.":"Une ambiance détendue et sociale qui évolue constamment, avec des événements et des moments saisonniers toute l’année.","Andreas Music Hub is a community first. The goal is simple: create an environment where conversations feel natural, events feel worth joining and everyone has room to find their place.":"Andreas Music Hub met la communauté en premier. Le but est simple : créer un environnement où les discussions sont naturelles, où les événements donnent envie de participer et où chacun peut trouver sa place.","The server is built around community events, activities, seasonal experiences and future surprises. Halloween is only the current event theme, not the permanent identity of Andreas Music Hub.":"Le serveur repose sur des événements communautaires, des activités, des expériences saisonnières et de futures surprises. Halloween n’est que le thème actuel, pas l’identité permanente d’Andreas Music Hub.","A general community where different interests can coexist, with events, activities, conversations and future rewards for the people who help the server grow.":"Une communauté générale où différents centres d’intérêt peuvent coexister, avec des événements, des activités, des discussions et de futures récompenses pour ceux qui font grandir le serveur.","Talk, joke around, meet new people and make the server feel less like another empty Discord tab.":"Discutez, plaisantez, rencontrez de nouvelles personnes et faites du serveur autre chose qu’un onglet Discord vide.","Projects, edits, art, ideas, clips and other creations belong here too.":"Projets, montages, art, idées, clips et autres créations ont aussi leur place ici.","Community events, seasonal themes, activities and future surprises give everyone something to look forward to.":"Les événements communautaires, thèmes saisonniers, activités et futures surprises donnent toujours quelque chose à attendre.","Halloween and other temporary themes can transform the server for a while without changing its core identity.":"Halloween et les autres thèmes temporaires peuvent transformer le serveur pendant un moment sans changer son identité fondamentale.","Find people with similar interests and build your own little corner of the community.":"Trouvez des personnes aux intérêts similaires et créez votre propre petit coin de communauté.","The server evolves with its community. As it grows, bigger events and special rewards can become possible.":"Le serveur évolue avec sa communauté. En grandissant, de plus grands événements et des récompenses spéciales deviennent possibles.","Everything is designed to stay readable and welcoming, with room for future channels, events and community features.":"Tout est conçu pour rester clair et accueillant, avec de la place pour de futurs salons, événements et fonctionnalités communautaires.","Community conversations, casual discussions and places to meet people without drowning in channel clutter.":"Discussions communautaires, conversations détendues et espaces pour rencontrer du monde sans se noyer dans une avalanche de salons.","Community activities, events and shared experiences give the server more to do than simply talking in channels.":"Les activités, événements et expériences partagées donnent au serveur bien plus à faire que simplement discuter dans des salons.","Special events, seasonal changes, activities and community surprises keep the experience fresh.":"Les événements spéciaux, changements saisonniers, activités et surprises communautaires gardent l’expérience vivante.","If the community keeps growing, bigger events, special rewards and future Nitro giveaways can become part of the server.":"Si la communauté continue de grandir, de plus grands événements, des récompenses spéciales et de futurs giveaways Nitro pourront rejoindre le serveur.","Real-time community statistics for Andreas Music Hub, directly connected to the Discord server.":"Statistiques communautaires en temps réel pour Andreas Music Hub, directement connectées au serveur Discord.","Discord does not expose a public bot total through an invite alone.":"Discord ne fournit pas de total public des bots via une simple invitation.","Join Andreas Music Hub and become part of a growing community. Events, activities and future rewards are waiting on the other side.":"Rejoignez Andreas Music Hub et faites partie d’une communauté en pleine croissance. Des événements, activités et futures récompenses vous attendent.","Customize the experience without changing the visual identity of Andreas Music Hub.":"Personnalisez l’expérience sans changer l’identité visuelle d’Andreas Music Hub.","VIP is designed to add meaningful perks without turning the community into a paywall simulator.":"VIP ajoute des avantages utiles sans transformer la communauté en simulateur de paywall.","Access new private text and voice spaces reserved for VIP members and special community conversations.":"Accédez à de nouveaux espaces texte et vocaux privés réservés aux membres VIP et à certaines discussions communautaires.","Receive additional server privileges and a distinct VIP role that makes your status immediately recognizable.":"Recevez des privilèges supplémentaires et un rôle VIP distinct qui rend votre statut immédiatement reconnaissable.","Get access to selected events, activities, announcements and future features before everyone else.":"Accédez à certains événements, activités, annonces et futures fonctionnalités avant tout le monde.","Special activities and occasional events can be created specifically for VIP members.":"Des activités spéciales et des événements occasionnels peuvent être créés spécialement pour les membres VIP.","Future VIP drops, rewards and community surprises can be reserved for members of the program.":"De futurs drops VIP, récompenses et surprises communautaires pourront être réservés aux membres du programme.","As Andreas Music Hub evolves, the VIP package can gain new perks and features without changing its core price.":"À mesure qu’Andreas Music Hub évolue, l’offre VIP peut recevoir de nouveaux avantages sans changer son prix de base.","A small one-time-style entry price is planned for the VIP experience. The payment button is intentionally inactive for now while the system is being prepared.":"Un petit prix d’entrée unique est prévu pour l’expérience VIP. Le bouton de paiement reste volontairement inactif pendant la préparation du système.","Early access, private spaces, exclusive activities and more. VIP is the premium layer of Andreas Music Hub, while the main community remains open to everyone.":"Accès anticipé, espaces privés, activités exclusives et plus encore. VIP est la couche premium d’Andreas Music Hub, tandis que la communauté principale reste ouverte à tous."});
 Object.assign(I18N.es,{"Welcome to ":"Bienvenido a ","A place to":"Un lugar para","belong.":"pertenecer.","A space designed around actual conversations and people, not a wall of useless channels.":"Un espacio pensado para conversaciones reales y personas, no para una pared de canales inútiles.","Share projects, ideas, media and whatever strange thing you've been working on at 3 AM.":"Comparte proyectos, ideas, contenido y esa cosa extraña en la que estabas trabajando a las 3 de la mañana.","Relaxed, social and constantly evolving, with events and seasonal moments throughout the year.":"Un ambiente relajado, social y en constante evolución, con eventos y momentos de temporada durante todo el año.","The server is built around community events, activities, seasonal experiences and future surprises. Halloween is only the current event theme, not the permanent identity of Andreas Music Hub.":"El servidor gira en torno a eventos comunitarios, actividades, experiencias de temporada y futuras sorpresas. Halloween es solo el tema actual, no la identidad permanente de Andreas Music Hub.","A general community where different interests can coexist, with events, activities, conversations and future rewards for the people who help the server grow.":"Una comunidad general donde distintos intereses pueden convivir, con eventos, actividades, conversaciones y futuras recompensas para quienes ayudan a hacer crecer el servidor.","Talk, joke around, meet new people and make the server feel less like another empty Discord tab.":"Habla, bromea, conoce gente nueva y haz que el servidor sea algo más que otra pestaña vacía de Discord.","Projects, edits, art, ideas, clips and other creations belong here too.":"Proyectos, ediciones, arte, ideas, clips y otras creaciones también tienen su lugar aquí.","Everything is designed to stay readable and welcoming, with room for future channels, events and community features.":"Todo está diseñado para ser claro y acogedor, con espacio para futuros canales, eventos y funciones de comunidad.","Real-time community statistics for Andreas Music Hub, directly connected to the Discord server.":"Estadísticas de la comunidad en tiempo real para Andreas Music Hub, conectadas directamente al servidor de Discord.","Join Andreas Music Hub and become part of a growing community. Events, activities and future rewards are waiting on the other side.":"Únete a Andreas Music Hub y forma parte de una comunidad que crece. Te esperan eventos, actividades y futuras recompensas.","VIP is designed to add meaningful perks without turning the community into a paywall simulator.":"VIP añade ventajas útiles sin convertir la comunidad en un simulador de paywall.","Access new private text and voice spaces reserved for VIP members and special community conversations.":"Accede a nuevos espacios privados de texto y voz reservados para miembros VIP y conversaciones especiales.","Receive additional server privileges and a distinct VIP role that makes your status immediately recognizable.":"Recibe privilegios adicionales y un rol VIP distintivo que hace reconocible tu estado.","Get access to selected events, activities, announcements and future features before everyone else.":"Accede a eventos, actividades, anuncios y futuras funciones seleccionadas antes que los demás.","Special activities and occasional events can be created specifically for VIP members.":"Se pueden crear actividades especiales y eventos ocasionales específicamente para miembros VIP.","Future VIP drops, rewards and community surprises can be reserved for members of the program.":"Futuros drops VIP, recompensas y sorpresas de la comunidad pueden reservarse para los miembros del programa.","As Andreas Music Hub evolves, the VIP package can gain new perks and features without changing its core price.":"A medida que Andreas Music Hub evoluciona, el paquete VIP puede recibir nuevas ventajas sin cambiar su precio base.","Early access, private spaces, exclusive activities and more. VIP is the premium layer of Andreas Music Hub, while the main community remains open to everyone.":"Acceso anticipado, espacios privados, actividades exclusivas y mucho más. VIP es la capa premium de Andreas Music Hub, mientras la comunidad principal sigue abierta a todos."});
@@ -917,6 +927,7 @@ function setLanguage(language){
   localStorage.setItem(LANGUAGE_KEY,language);
   translateSite();
   closeLanguageMenu();
+  renderDiscordNavigation();
 }
 const savedTheme=localStorage.getItem(THEME_KEY)||'dark';
 applyTheme(savedTheme,false);
@@ -940,10 +951,92 @@ const searchDestinations = [
   {id:"dj-andrs",title:"DJ ANDRS",meta:"Open the separate DJ ANDRS website",icon:"♪",external:"https://dj-andrs.pages.dev/"}
 ];
 
+const DISCORD_CONFIG={
+  authEndpoint:"/auth/discord",
+  logoutEndpoint:"/auth/discord/logout",
+  moderationRoleId:"MODERATION_ROLE_ID"
+};
+// The future backend supplies this state through window.setDiscordUser; it is not authentication.
+let discordUser=null;
+
+function isDiscordGuildMember(){
+  return Boolean(discordUser&&discordUser.guildMember===true&&discordUser.id);
+}
+// This only controls navigation visibility; the backend must enforce actual moderation access.
+function canSeeDiscordModeration(){
+  const roleId=DISCORD_CONFIG.moderationRoleId;
+  return isDiscordGuildMember()&&roleId&&roleId!=="MODERATION_ROLE_ID"&&Array.isArray(discordUser.roles)&&discordUser.roles.includes(roleId);
+}
+function getDiscordNavigationItems(){
+  if(!isDiscordGuildMember())return [];
+  const items=[{id:"profil",title:translateText("Profile"),meta:"",icon:"◎"}];
+  if(canSeeDiscordModeration())items.push({id:"moderation",title:translateText("Moderation"),meta:"",icon:"◇"});
+  return items;
+}
+function setDiscordUser(user){
+  if(!user||typeof user!=="object"){discordUser=null;}
+  else{
+    discordUser={
+      id:user.id==null?"":String(user.id),
+      username:typeof user.username==="string"?user.username:"",
+      avatar:typeof user.avatar==="string"?user.avatar:"",
+      guildMember:user.guildMember===true,
+      roles:Array.isArray(user.roles)?user.roles.filter(role=>typeof role==="string"):[]
+    };
+  }
+  renderDiscordNavigation();
+}
+window.setDiscordUser=setDiscordUser;
+
+function renderDiscordNavigation(){
+  const member=isDiscordGuildMember();
+  const topLink=document.getElementById("nav-join");
+  if(topLink){
+    if(member){
+      topLink.href="#profil";topLink.removeAttribute("target");topLink.removeAttribute("rel");topLink.classList.add("navjoin-user");
+      topLink.setAttribute("aria-label",translateText("Profile"));
+      const avatar=document.createElement("img");avatar.className="navjoin-avatar";avatar.alt="";avatar.setAttribute("aria-hidden","true");
+      const validAvatar=discordUser.avatar.startsWith("https://cdn.discordapp.com/")||discordUser.avatar.startsWith("https://media.discordapp.net/");
+      avatar.src=validAvatar?discordUser.avatar:"https://cdn.discordapp.com/embed/avatars/0.png";
+      const username=document.createElement("span");username.className="navjoin-username";username.textContent=discordUser.username||discordUser.id;
+      topLink.replaceChildren(avatar,username);
+    }else{
+      topLink.href=topLink.dataset.inviteHref||"https://discord.gg/yuaaf5YNfE";topLink.target="_blank";topLink.rel="noopener";topLink.classList.remove("navjoin-user");
+      topLink.removeAttribute("aria-label");topLink.textContent=translateText("Join now ↗");
+    }
+  }
+  const action=document.getElementById("discord-auth-action");
+  if(action){
+    action.href=DISCORD_CONFIG.authEndpoint;
+    action.textContent=translateText(member?"LOG OUT":"CONNECT WITH DISCORD");
+    if(!action.dataset.discordActionBound){action.addEventListener("click",handleDiscordAction);action.dataset.discordActionBound="true";}
+  }
+  renderMainMenu();
+}
+function handleDiscordAction(event){
+  if(!isDiscordGuildMember())return;
+  event.preventDefault();
+  logoutDiscord();
+}
+async function logoutDiscord(){
+  try{await fetch(DISCORD_CONFIG.logoutEndpoint,{method:"POST",credentials:"include"});}catch(error){}
+  setDiscordUser(null);
+  if(location.hash==="#profil"||location.hash==="#moderation"){history.replaceState(null,"","#home");syncMainMenuActive();}
+}
+function navigateDiscordSection(id){
+  if(id==="profil"&&!isDiscordGuildMember())return false;
+  if(id==="moderation"&&!canSeeDiscordModeration())return false;
+  history.replaceState(null,"","#"+id);syncMainMenuActive();return true;
+}
+function handleDiscordProfileLink(event){
+  if(!isDiscordGuildMember())return;
+  event.preventDefault();navigateDiscordSection("profil");
+}
+
 function renderMainMenu(){
   const menu=document.getElementById("main-menu-list");
   if(!menu)return;
-  menu.innerHTML=searchDestinations.filter(item=>item.id!=="settings").map(item=>`<button class="main-menu-item" type="button" data-menu-id="${item.id}"><span class="main-menu-icon">${item.icon}</span><span class="main-menu-copy"><span class="main-menu-title">${item.title}</span><span class="main-menu-meta">${item.meta}</span></span></button>`).join("");
+  menu.innerHTML=searchDestinations.filter(item=>item.id!=="settings").concat(getDiscordNavigationItems()).map(item=>`<button class="main-menu-item" type="button" data-menu-id="${item.id}"><span class="main-menu-icon">${item.icon}</span><span class="main-menu-copy"><span class="main-menu-title">${item.title}</span><span class="main-menu-meta">${item.meta}</span></span></button>`).join("");
   menu.querySelectorAll("[data-menu-id]").forEach(button=>button.addEventListener("click",()=>handleMainMenuDestination(button.dataset.menuId)));
   syncMainMenuActive();
 }
@@ -964,6 +1057,7 @@ function closeMainMenu(){
   menu.classList.remove("open");button.setAttribute("aria-expanded","false");menu.setAttribute("aria-hidden","true");
 }
 function handleMainMenuDestination(id){
+  if(id==="profil"||id==="moderation"){closeMainMenu();navigateDiscordSection(id);return}
   const item=searchDestinations.find(entry=>entry.id===id); if(!item)return;
   closeMainMenu();
   if(item.external){if(item.id==="dj-andrs"){openSiteWarning();return}window.open(item.external,"_blank","noopener,noreferrer");return}
@@ -1054,7 +1148,7 @@ window.addEventListener("load",()=>{
   const id=location.hash.slice(1);
   showPage(pages.includes(id)?id:"home");
   initSiteSearch();
-  renderMainMenu();
+  renderDiscordNavigation();
 });
 
 /* Animated Halloween / abstract particles */
