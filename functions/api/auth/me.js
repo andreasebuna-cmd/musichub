@@ -1,4 +1,4 @@
-import {SESSION_COOKIE,cookieValue,decryptSession,json} from "../../../_discord.js";
+import {SESSION_COOKIE,cookieValue,decryptSession,json} from "../../_discord.js";
 
 export async function onRequestGet({request,env}){
   if(!env.SESSION_SECRET)return json({authenticated:false},200);
