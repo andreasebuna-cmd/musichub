@@ -101,6 +101,9 @@ canvas#fx{position:fixed;inset:0;z-index:-2;pointer-events:none}
 .navlinks button:hover,.navlinks button.active{color:#fff;background:rgba(255,255,255,.075)}
 .nav-counter{border:0;background:transparent;color:#aaa;padding:11px 13px;border-radius:14px;font-weight:600;font-size:12px;text-decoration:none;cursor:pointer;transition:.25s var(--ease)}
 .nav-counter:hover{color:#fff;background:rgba(255,255,255,.075)}
+.live-counter{margin-top:18px;padding:30px;border-radius:30px;background:linear-gradient(145deg,rgba(255,255,255,.085),rgba(255,255,255,.025));border:1px solid rgba(255,255,255,.105);backdrop-filter:blur(25px) saturate(135%);box-shadow:inset 0 1px rgba(255,255,255,.08),0 24px 70px rgba(0,0,0,.23)}
+.live-counter-head{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;margin-bottom:20px}.live-counter-head .kicker{margin-bottom:7px}.live-counter-status{font-size:10px;color:#77736f;text-transform:uppercase;letter-spacing:1px}.live-counter-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.live-stat{padding:20px;border-radius:22px;background:rgba(0,0,0,.2);border:1px solid rgba(255,255,255,.07)}.live-stat strong{display:block;font-size:32px;letter-spacing:-1.5px}.live-stat span{display:block;margin-top:5px;color:#8e8a85;font-size:10px;text-transform:uppercase;letter-spacing:1.1px}.live-stat small{display:block;margin-top:9px;color:#66625e;font-size:10px}.live-stat.loading strong{opacity:.45}
+@media(max-width:520px){.live-counter{padding:23px}.live-counter-grid{grid-template-columns:1fr}.live-counter-head{align-items:flex-start;flex-direction:column;gap:5px}}
 .navjoin{
   text-decoration:none;color:#090705;font-weight:800;font-size:12px;
   background:linear-gradient(135deg,#ff8a2b,#ff5a00);
@@ -291,7 +294,7 @@ footer b{color:#9a9691}
     <button data-page="about" onclick="showPage('about')">About</button>
     <button data-page="community" onclick="showPage('community')">Community</button>
     <button data-page="server" onclick="showPage('server')">The Server</button>
-    <a class="nav-counter" href="/live-counter/">Live Counter</a>
+    <button data-page="live-counter" onclick="showPage('live-counter')">Live Counter</button>
   </nav>
   <a class="navjoin" href="https://discord.gg/yuaaf5YNfE" target="_blank" rel="noopener">Join now ↗</a>
 </header>
@@ -454,6 +457,33 @@ footer b{color:#9a9691}
   </div>
 </section>
 
+<section id="live-counter">
+  <div class="section-head">
+    <div class="kicker">Live statistics</div>
+    <h2>Server <span class="gradient">live.</span></h2>
+    <p>Real-time community statistics for Andreas Music Hub, directly connected to the Discord server.</p>
+  </div>
+  <div class="live-counter" aria-label="Live server counter">
+    <div class="live-counter-head">
+      <div>
+        <div class="kicker">Live Counter</div>
+        <div class="live-counter-status" id="counter-status">Connecting to Discord…</div>
+      </div>
+      <div class="live-counter-status">Updates automatically</div>
+    </div>
+    <div class="live-counter-grid">
+      <div class="live-stat loading" id="members-stat">
+        <strong id="member-count">—</strong><span>Members</span>
+        <small>Approximate live count from Discord</small>
+      </div>
+      <div class="live-stat">
+        <strong>—</strong><span>Bots</span>
+        <small>Discord does not expose a public bot total through an invite alone.</small>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section id="join">
   <div class="join">
     <div class="joinbox">
@@ -482,7 +512,7 @@ footer b{color:#9a9691}
 </footer>
 
 <script>
-const pages = ["home","about","community","server","join"];
+const pages = ["home","about","community","server","live-counter","join"];
 
 function showPage(id){
   if(!pages.includes(id)) id="home";
@@ -525,6 +555,22 @@ function draw(t){
   requestAnimationFrame(draw);
 }
 addEventListener("resize",resize);resize();requestAnimationFrame(draw);
+
+/* Live Discord member counter */
+const DISCORD_INVITE = "yuaaf5YNfE";
+async function updateLiveCounter(){
+  const status=document.getElementById("counter-status"), count=document.getElementById("member-count"), stat=document.getElementById("members-stat");
+  if(!status||!count)return;
+  try{
+    const response=await fetch(`https://discord.com/api/v10/invites/${DISCORD_INVITE}?with_counts=true`,{cache:"no-store"});
+    if(!response.ok)throw new Error();
+    const data=await response.json();
+    if(typeof data.approximate_member_count!=="number")throw new Error();
+    count.textContent=data.approximate_member_count.toLocaleString("en-US");
+    stat.classList.remove("loading"); status.textContent="Live • Discord connected";
+  }catch(e){status.textContent="Live count temporarily unavailable";stat.classList.add("loading")}
+}
+updateLiveCounter();setInterval(updateLiveCounter,60000);
 
 /* Tiny parallax on the hero emblem */
 addEventListener("pointermove",e=>{
