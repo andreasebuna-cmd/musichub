@@ -758,6 +758,14 @@ body.vip-mode .top-menu-btn span{background:#f5c76a}
     </div>
   </div>
 </section>
+<section id="friends" class="profile-page">
+  <div class="profile-shell">
+    <div class="kicker">Connected Hub members</div>
+    <h2>Your <span class="gradient">friends.</span></h2>
+    <p style="color:var(--muted);max-width:620px;margin:0 0 24px">People you have accepted as friends on Andreas Music Hub.</p>
+    <div id="friends-content"></div>
+  </div>
+</section>
 <section id="vip" class="vip-page">
   <div class="vip-hero">
     <div>
@@ -963,7 +971,7 @@ translateSite();
 matchMedia('(prefers-color-scheme: light)').addEventListener('change',()=>{if((localStorage.getItem(THEME_KEY)||'dark')==='system')applyTheme('system',true)});document.addEventListener('click',e=>{if(!e.target.closest('.language-select-wrap'))closeLanguageMenu()});
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLanguageMenu()});
 
-const pages = ["home","about","community","server","live-counter","join","vip","settings","profil"];
+const pages = ["home","about","community","server","live-counter","join","vip","settings","profil","friends"];
 
 const searchDestinations = [
   {id:"home",title:"Home",meta:"Main page",icon:"⌂"},
@@ -1010,7 +1018,7 @@ function canSeeDiscordModeration(){
 }
 function getDiscordNavigationItems(){
   if(!isDiscordAuthenticated())return [];
-  const items=[{id:"profil",title:translateText("Profile"),meta:"",icon:"◎"}];
+  const items=[{id:"profil",title:translateText("Profile"),meta:"",icon:"◎"},{id:"friends",title:translateText("Friends"),meta:translateText("Connected Hub members"),icon:"♡"}];
   if(canSeeDiscordModeration())items.push({id:"moderation",title:translateText("Moderation"),meta:"",icon:"◇"});
   return items;
 }
@@ -1043,7 +1051,7 @@ function renderViewedProfile(profile){
           <p class="profile-sub">${translateText("Discord account")}</p>
         </div>
       </div>
-      ${profile.privacy==="public"||isOwner?`<div class="profile-grid">
+      ${profile.privacy==="public"||isOwner||profile.friendship==="friends"?`<div class="profile-grid">
         <div class="profile-stat"><div class="profile-stat-label">${translateText("Server membership")}</div><div class="profile-stat-value">${translateText("Member")} · ${translateText("Yes")}</div></div>
         <div class="profile-stat"><div class="profile-stat-label">${translateText("Discord ID")}</div><div class="profile-stat-value">${escapeHtml(profile.id)}</div></div>
         <div class="profile-stat"><div class="profile-stat-label">${translateText("Online status")}</div><div class="profile-stat-value">${translateText("Online status unavailable")}</div></div>
@@ -1184,10 +1192,10 @@ function handleDiscordAction(event){
 async function logoutDiscord(){
   try{await fetch(DISCORD_CONFIG.logoutEndpoint,{method:"POST",credentials:"include"});}catch(error){}
   setDiscordUser(null);
-  if(location.hash==="#profil"||location.hash==="#moderation"){history.replaceState(null,"","#home");syncMainMenuActive();}
+  if(location.hash==="#profil"||location.hash==="#friends"||location.hash==="#moderation"){history.replaceState(null,"","#home");syncMainMenuActive();}
 }
 function navigateDiscordSection(id){
-  if(id==="profil"&&!isDiscordAuthenticated())return false;
+  if((id==="profil"||id==="friends")&&!isDiscordGuildMember())return false;
   if(id==="moderation"&&!canSeeDiscordModeration())return false;
   showPage(id);return true;
 }
@@ -1220,7 +1228,7 @@ function closeMainMenu(){
   menu.classList.remove("open");button.setAttribute("aria-expanded","false");menu.setAttribute("aria-hidden","true");
 }
 function handleMainMenuDestination(id){
-  if(id==="profil"||id==="moderation"){closeMainMenu();navigateDiscordSection(id);return}
+  if(id==="profil"||id==="friends"||id==="moderation"){closeMainMenu();navigateDiscordSection(id);return}
   const item=searchDestinations.find(entry=>entry.id===id); if(!item)return;
   closeMainMenu();
   if(item.external){if(item.id==="dj-andrs"){openSiteWarning();return}window.open(item.external,"_blank","noopener,noreferrer");return}
@@ -1315,6 +1323,7 @@ function showPage(id){
   history.replaceState(null,"","#"+id);
   syncMainMenuActive();
   if(id==="settings"){loadProfileSettings();syncProfileSettingsControls();}
+  if(id==="friends"&&isDiscordGuildMember()&&typeof window.loadFriendsPage==="function")window.loadFriendsPage();
   if(id==="profil"&&isDiscordGuildMember()&&!selectedProfileId){loadProfileSettings();renderProfileSettingsInline();}
 }
 window.addEventListener("load",()=>{
