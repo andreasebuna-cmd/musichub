@@ -110,6 +110,17 @@ canvas#fx{position:fixed;inset:0;z-index:-2;pointer-events:none}
 .nav-search svg{width:16px;height:16px;flex:0 0 auto;color:#777}
 .nav-search input{width:100%;border:0;outline:0;background:transparent;color:#eee;font:600 12px inherit}
 .nav-search input::placeholder{color:#777}
+.search-suggestions{position:absolute;left:50%;top:calc(100% + 10px);transform:translate(-50%,-8px) scale(.98);width:100%;max-height:360px;overflow-y:auto;padding:8px;border:1px solid rgba(255,255,255,.12);border-radius:18px;background:rgba(16,15,14,.9);box-shadow:0 24px 80px rgba(0,0,0,.48),inset 0 1px rgba(255,255,255,.08);backdrop-filter:blur(28px) saturate(150%);-webkit-backdrop-filter:blur(28px) saturate(150%);opacity:0;visibility:hidden;pointer-events:none;transition:.25s var(--ease);scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.18) transparent;z-index:90}
+.search-suggestions.open{opacity:1;visibility:visible;pointer-events:auto;transform:translate(-50%,0) scale(1)}
+.search-suggestion{width:100%;display:flex;align-items:center;gap:11px;padding:11px 12px;border:0;border-radius:13px;background:transparent;color:#eee;text-align:left;cursor:pointer;transition:.2s var(--ease)}
+.search-suggestion:hover,.search-suggestion:focus-visible{background:rgba(255,106,0,.1);outline:0}
+.search-suggestion-icon{width:34px;height:34px;flex:0 0 34px;display:grid;place-items:center;border-radius:11px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);color:#ff9a55;font-size:13px;font-weight:900}
+.search-suggestion-copy{min-width:0;display:flex;flex-direction:column;gap:2px}
+.search-suggestion-title{font-size:12px;font-weight:800;letter-spacing:-.1px}
+.search-suggestion-meta{font-size:10px;color:#77736f;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.search-suggestion.empty{justify-content:center;color:#77736f;font-size:11px;padding:18px}
+.search-suggestion.empty:hover{background:transparent}
+@media(max-width:520px){.search-suggestions{max-height:300px;border-radius:16px}.search-suggestion{padding:10px}.search-suggestion-icon{width:32px;height:32px;flex-basis:32px}}
 .nav-actions{display:flex;align-items:center;gap:9px;margin-left:auto}
 .settings-wrap{position:relative}
 .settings-btn{width:42px;height:42px;border:1px solid rgba(255,255,255,.1);border-radius:14px;background:rgba(255,255,255,.055);color:#aaa;display:grid;place-items:center;cursor:pointer;transition:.25s var(--ease);font-size:17px}
@@ -388,9 +399,10 @@ body.vip-mode .vip-page .kicker,body.vip-mode .vip-page .icon{color:#f5c76a}
     <img src="https://cdn.discordapp.com/attachments/1516127870882287729/1557409458269978754/Logo_A_orange_fluide_sur_fond_noir.png?backend=b2&ex=6ac7b216&is=6ac66096&hm=f5670ed2c168c421ee847215c7dc5c7133711a25aab0ff8aafa9de4ad6f2d8b4&v=20261007-1710" alt="Andreas Music Hub">
     <span class="brand-copy"><strong>Andreas Music Hub</strong><small>V1.2.8 <b>•</b> Community</small></span>
   </a>
-  <div class="nav-search" role="search">
+  <div class="nav-search" id="site-search" role="search">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="11" cy="11" r="6.8"/><path d="m16.2 16.2 4.2 4.2"/></svg>
-    <input type="search" placeholder="Search" aria-label="Search">
+    <input id="site-search-input" type="search" placeholder="Search" aria-label="Search" autocomplete="off">
+    <div class="search-suggestions" id="search-suggestions" role="listbox" aria-label="Site pages"></div>
   </div>
   <div class="nav-actions">
     <div class="settings-wrap">
@@ -811,6 +823,78 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLanguageMenu()}
 
 const pages = ["home","about","community","server","live-counter","join","vip","settings"];
 
+const searchDestinations = [
+  {id:"home",title:"Home",meta:"Main page",icon:"⌂"},
+  {id:"about",title:"About",meta:"What Andreas Music Hub is",icon:"i"},
+  {id:"community",title:"Community",meta:"People, activities and spaces",icon:"◉"},
+  {id:"server",title:"The Server",meta:"Explore the server",icon:"◆"},
+  {id:"live-counter",title:"Live Counter",meta:"Live Discord community stats",icon:"↗"},
+  {id:"join",title:"Join",meta:"Join Andreas Music Hub",icon:"+"},
+  {id:"vip",title:"VIP",meta:"VIP experience and perks",icon:"★"},
+  {id:"settings",title:"Settings",meta:"Theme and language",icon:"⚙"},
+  {id:"dj-andrs",title:"DJ ANDRS",meta:"Open the separate DJ ANDRS website",icon:"♫",external:"https://dj-andrs.pages.dev/"}
+];
+
+function openSearchSuggestions(){
+  const menu=document.getElementById("search-suggestions");
+  if(!menu)return;
+  menu.classList.add("open");
+  menu.setAttribute("aria-hidden","false");
+  renderSearchSuggestions(document.getElementById("site-search-input")?.value||"");
+}
+function closeSearchSuggestions(){
+  const menu=document.getElementById("search-suggestions");
+  if(!menu)return;
+  menu.classList.remove("open");
+  menu.setAttribute("aria-hidden","true");
+}
+function renderSearchSuggestions(query=""){
+  const menu=document.getElementById("search-suggestions");
+  if(!menu)return;
+  const q=query.trim().toLowerCase();
+  const matches=searchDestinations.filter(item=>(item.title+" "+item.meta).toLowerCase().includes(q));
+  if(!matches.length){
+    menu.innerHTML='<div class="search-suggestion empty">No matching pages</div>';
+    return;
+  }
+  menu.innerHTML=matches.map(item=>`<button class="search-suggestion" type="button" role="option" data-search-id="${item.id}">
+    <span class="search-suggestion-icon">${item.icon}</span>
+    <span class="search-suggestion-copy"><span class="search-suggestion-title">${item.title}</span><span class="search-suggestion-meta">${item.meta}</span></span>
+  </button>`).join("");
+}
+function handleSearchDestination(id){
+  const item=searchDestinations.find(entry=>entry.id===id);
+  if(!item)return;
+  closeSearchSuggestions();
+  const input=document.getElementById("site-search-input");
+  if(input)input.blur();
+  if(item.external){
+    window.open(item.external,"_blank","noopener,noreferrer");
+    return;
+  }
+  showPage(item.id);
+}
+function initSiteSearch(){
+  const search=document.getElementById("site-search");
+  const input=document.getElementById("site-search-input");
+  const menu=document.getElementById("search-suggestions");
+  if(!search||!input||!menu)return;
+  input.addEventListener("focus",openSearchSuggestions);
+  input.addEventListener("click",openSearchSuggestions);
+  input.addEventListener("input",()=>renderSearchSuggestions(input.value));
+  menu.addEventListener("click",e=>{
+    const button=e.target.closest(".search-suggestion[data-search-id]");
+    if(button)handleSearchDestination(button.dataset.searchId);
+  });
+  document.addEventListener("click",e=>{
+    if(!e.target.closest("#site-search"))closeSearchSuggestions();
+  });
+  document.addEventListener("keydown",e=>{
+    if(e.key==="Escape"){closeSearchSuggestions();input.blur()}
+  });
+  renderSearchSuggestions();
+}
+
 function showPage(id){
   if(!pages.includes(id)) id="home";
   const wasVip=document.body.classList.contains("vip-mode");
@@ -832,6 +916,7 @@ function showPage(id){
 window.addEventListener("load",()=>{
   const id=location.hash.slice(1);
   showPage(pages.includes(id)?id:"home");
+  initSiteSearch();
 });
 
 /* Animated Halloween / abstract particles */
