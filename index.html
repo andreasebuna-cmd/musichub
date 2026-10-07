@@ -1018,7 +1018,9 @@ function canSeeDiscordModeration(){
 }
 function getDiscordNavigationItems(){
   if(!isDiscordAuthenticated())return [];
-  const items=[{id:"profil",title:translateText("Profile"),meta:"",icon:"◎"},{id:"friends",title:translateText("Friends"),meta:translateText("Connected Hub members"),icon:"♡"}];
+  const items=[{id:"profil",title:translateText("Profile"),meta:"",icon:"◎"}];
+  if(!isDiscordGuildMember())return items;
+  items.push({id:"friends",title:translateText("Friends"),meta:translateText("Connected Hub members"),icon:"♡"});
   if(canSeeDiscordModeration())items.push({id:"moderation",title:translateText("Moderation"),meta:"",icon:"◇"});
   return items;
 }
