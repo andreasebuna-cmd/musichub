@@ -19,6 +19,16 @@
   
   
 <script>
+(function(){
+  const allowedPaths=["/","/index.html","/countdown/","/vip/","/error/"];
+  const path=window.location.pathname.replace(/\\/+$/,"")||"/";
+  const isKnownPath=allowedPaths.includes(path) || path.startsWith("/assets/");
+  if(!isKnownPath && !path.startsWith("/error")) {
+    window.location.replace("/error/");
+  }
+})();
+</script>
+<script>
 (function () {
   const OPEN_AT = new Date("2026-10-07T19:23:00+02:00").getTime();
   if (Date.now() < OPEN_AT) {
