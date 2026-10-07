@@ -34,6 +34,7 @@ export async function onRequestPost({request,env}){
   const profile={
     id:String(session.user.id),
     username:String(session.user.username||""),
+    displayName:String(session.user.displayName||""),
     avatar:String(session.user.avatar||""),
     guildMember:true,
     roles,
