@@ -246,6 +246,17 @@ footer{
   padding:28px 0 35px;color:#6f6b67;font-size:11px;display:flex;justify-content:space-between;gap:20px;
   border-top:1px solid rgba(255,255,255,.07)
 }
+.live-counter{margin-top:18px;padding:30px;border-radius:30px;background:linear-gradient(145deg,rgba(255,255,255,.085),rgba(255,255,255,.025));border:1px solid rgba(255,255,255,.105);backdrop-filter:blur(25px) saturate(135%);box-shadow:inset 0 1px rgba(255,255,255,.08),0 24px 70px rgba(0,0,0,.23)}
+.live-counter-head{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;margin-bottom:20px}
+.live-counter-head .kicker{margin-bottom:7px}
+.live-counter-status{font-size:10px;color:#77736f;text-transform:uppercase;letter-spacing:1px}
+.live-counter-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.live-stat{padding:20px;border-radius:22px;background:rgba(0,0,0,.2);border:1px solid rgba(255,255,255,.07)}
+.live-stat strong{display:block;font-size:32px;letter-spacing:-1.5px}
+.live-stat span{display:block;margin-top:5px;color:#8e8a85;font-size:10px;text-transform:uppercase;letter-spacing:1.1px}
+.live-stat small{display:block;margin-top:9px;color:#66625e;font-size:10px}
+.live-stat.loading strong{opacity:.45}
+@media(max-width:520px){.live-counter{padding:23px}.live-counter-grid{grid-template-columns:1fr}.live-counter-head{align-items:flex-start;flex-direction:column;gap:5px}}
 footer b{color:#9a9691}
 
 @media(max-width:850px){
@@ -281,7 +292,7 @@ footer b{color:#9a9691}
 <header class="nav">
   <a class="brand" href="#" onclick="showPage('home');return false;">
     <img src="https://cdn.discordapp.com/attachments/1516127870882287729/1557409458269978754/Logo_A_orange_fluide_sur_fond_noir.png?backend=b2&ex=6ac7b216&is=6ac66096&hm=f5670ed2c168c421ee847215c7dc5c7133711a25aab0ff8aafa9de4ad6f2d8b4&v=20261007-1710" alt="Andreas Music Hub">
-    <span><strong>Andreas Music Hub</strong><small>COMMUNITY • EST. 2026</small></span>
+    <span><strong>Andreas Music Hub</strong><small>COMMUNITY • V1.1</small></span>
   </a>
   <nav class="navlinks" aria-label="Main navigation">
     <button data-page="home" onclick="showPage('home')">Home</button>
@@ -313,6 +324,28 @@ footer b{color:#9a9691}
       <div class="emblem-card">
         <img src="https://cdn.discordapp.com/attachments/1516127870882287729/1557409458269978754/Logo_A_orange_fluide_sur_fond_noir.png?backend=b2&ex=6ac7b216&is=6ac66096&hm=f5670ed2c168c421ee847215c7dc5c7133711a25aab0ff8aafa9de4ad6f2d8b4&v=20261007-1710" alt="Andreas Music Hub emblem">
         <div class="floating-tag">ANDREAS <span>•</span> MUSIC HUB</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="live-counter" aria-label="Live server counter">
+    <div class="live-counter-head">
+      <div>
+        <div class="kicker">Live Counter</div>
+        <div class="live-counter-status" id="counter-status">Connecting to Discord…</div>
+      </div>
+      <div class="live-counter-status">Updates automatically</div>
+    </div>
+    <div class="live-counter-grid">
+      <div class="live-stat loading" id="members-stat">
+        <strong id="member-count">—</strong>
+        <span>Members</span>
+        <small>Approximate live count from Discord</small>
+      </div>
+      <div class="live-stat">
+        <strong id="bot-count">—</strong>
+        <span>Bots</span>
+        <small id="bot-note">Discord does not expose a public total bot count through an invite.</small>
       </div>
     </div>
   </div>
@@ -520,6 +553,32 @@ function draw(t){
   requestAnimationFrame(draw);
 }
 addEventListener("resize",resize);resize();requestAnimationFrame(draw);
+
+/* Live Discord member counter */
+const DISCORD_INVITE = "yuaaf5YNfE";
+const COUNTER_REFRESH_MS = 60000;
+
+async function updateLiveCounter(){
+  const status = document.getElementById("counter-status");
+  const memberCount = document.getElementById("member-count");
+  const membersStat = document.getElementById("members-stat");
+
+  try{
+    const response = await fetch(`https://discord.com/api/v10/invites/${DISCORD_INVITE}?with_counts=true`, {cache:"no-store"});
+    if(!response.ok) throw new Error("Discord API unavailable");
+    const data = await response.json();
+    if(typeof data.approximate_member_count !== "number") throw new Error("Member count unavailable");
+    memberCount.textContent = data.approximate_member_count.toLocaleString("en-US");
+    membersStat.classList.remove("loading");
+    status.textContent = "Live • Discord connected";
+  }catch(error){
+    status.textContent = "Live count temporarily unavailable";
+    membersStat.classList.add("loading");
+  }
+}
+
+updateLiveCounter();
+setInterval(updateLiveCounter, COUNTER_REFRESH_MS);
 
 /* Tiny parallax on the hero emblem */
 addEventListener("pointermove",e=>{
