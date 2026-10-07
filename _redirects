@@ -2,3 +2,7 @@
 /vip/         /vip/index.html         200
 /error/       /error/index.html       200
 /             /index.html             200
+/index.html   /index.html             200
+/favicon-v3.png /favicon-v3.png       200
+/preview.png    /preview.png          200
+/*            /error/                 302
