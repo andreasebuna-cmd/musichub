@@ -17,16 +17,22 @@ export async function onRequestGet({request,env}){
   }
 
   const viewerSession=env.SESSION_SECRET?await decryptSession(cookieValue(request,SESSION_COOKIE),env.SESSION_SECRET):null;
-  const isOwner=String(viewerSession?.user?.id||"")===id;
+  const viewerId=String(viewerSession?.user?.id||"");
+  const isOwner=viewerId===id;
+  let viewerFriends=[]; if(viewerId){try{const friendsRaw=await env.PROFILE_KV.get("friends:"+viewerId);viewerFriends=friendsRaw?JSON.parse(friendsRaw):[]}catch(error){}}
+  const areFriends=viewerFriends.map(String).includes(id);
+  let displayName=String(profile.displayName||"");
+  if(env.DISCORD_BOT_TOKEN){try{const liveMember=await discordGuildMember(id,env.DISCORD_BOT_TOKEN);displayName=String(liveMember?.user?.global_name||displayName||"")}catch(error){}}
   const publicProfile={
     id:String(profile.id),
     username:String(profile.username||""),
-    displayName:String(profile.displayName||""),
+    displayName,
     avatar:String(profile.avatar||""),
     guildMember:true,
-    privacy:profile.privacy==="public"?"public":"private"
+    privacy:profile.privacy==="public"?"public":"private",
+    friendship:isOwner?"self":(areFriends?"friends":"none")
   };
-  if(profile.privacy==="public"||isOwner){
+  if(profile.privacy==="public"||isOwner||areFriends){
     publicProfile.roles=Array.isArray(profile.roles)?profile.roles:[];
     publicProfile.roleNames=Array.isArray(profile.roleNames)?profile.roleNames:[];
     publicProfile.onlineStatus="Online status unavailable";
