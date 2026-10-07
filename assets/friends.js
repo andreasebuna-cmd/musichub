@@ -58,6 +58,36 @@
       if(typeof window.loadFriendsPage==="function"&&document.getElementById("friends")?.classList.contains("active"))window.loadFriendsPage();
     }catch(e){if(button){button.disabled=false;button.textContent=action==="block"?"Block":"Remove friend"}}
   }
+  async function loadFriendsPage(){
+    var root=document.getElementById("friends-content");
+    if(!root||!auth())return;
+    root.innerHTML='<div class="friends-empty">Loading friends…</div>';
+    try{
+      var r=await fetch("/api/friends/list",{credentials:"same-origin",cache:"no-store"});
+      var d=await r.json().catch(function(){return{}});
+      if(!r.ok)throw new Error(d.error||"Could not load friends");
+      var friends=Array.isArray(d.friends)?d.friends:[];
+      if(!friends.length){
+        root.innerHTML='<div class="friends-empty">You do not have any friends yet.</div>';
+        return;
+      }
+      root.innerHTML='<div class="friends-grid">'+friends.map(function(p){
+        var avatar=p.avatar||"https://cdn.discordapp.com/embed/avatars/0.png";
+        var name=p.displayName||p.username||"Hub member";
+        return '<button type="button" class="friend-card" data-friend-id="'+escapeHtml(String(p.id))+'"><img class="friend-avatar" src="'+escapeHtml(avatar)+'" alt=""><span class="friend-copy"><span class="friend-name">'+escapeHtml(name)+'</span><span class="friend-meta">Friend</span></span></button>';
+      }).join("")+'</div>';
+      root.querySelectorAll("[data-friend-id]").forEach(function(button){
+        button.addEventListener("click",function(){
+          var id=button.dataset.friendId;
+          if(typeof showPage==="function")showPage("profil");
+          if(typeof openMemberProfile==="function")openMemberProfile(id);
+        });
+      });
+    }catch(error){
+      root.innerHTML='<div class="friends-empty">Could not load your friends.</div>';
+    }
+  }
+  window.loadFriendsPage=loadFriendsPage;
   function patchProfile(){
     if(typeof window.renderViewedProfile!=="function"||window.renderViewedProfile.__friendsPatched)return;
     var original=window.renderViewedProfile;
@@ -94,7 +124,7 @@
   function init(){
     css();addBell();addPanels();patchProfile();patchSession();
     document.addEventListener("click",function(e){var p=document.getElementById("notification-panel");if(p&&!e.target.closest("#notification-panel")&&!e.target.closest("#notification-btn"))p.classList.remove("open")});
-    setTimeout(function(){patchProfile();patchSession();loadNotifications(false);setInterval(function(){patchProfile();patchSession();loadNotifications(true)},15000)},1000);
+    setTimeout(function(){patchProfile();patchSession();loadNotifications(false);connectNotificationStream();setInterval(function(){patchProfile();patchSession();loadNotifications(true)},5000)},1000);
   }
   if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",init);else init();
 })();
