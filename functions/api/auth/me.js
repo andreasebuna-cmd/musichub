@@ -29,6 +29,7 @@ export async function onRequestGet({request,env}){
     await env.PROFILE_KV.put("profile:"+user.id,JSON.stringify({
       id:user.id,
       username:user.username,
+      displayName:user.displayName||"",
       avatar:user.avatar,
       guildMember:true,
       roles:user.roles||[],
