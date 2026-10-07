@@ -11,6 +11,7 @@ export async function onRequestGet({request,env}){
   try{
     const member=env.DISCORD_BOT_TOKEN?await discordGuildMember(user.id,env.DISCORD_BOT_TOKEN):null;
     user.guildMember=Boolean(member);
+    user.displayName=String(member?.user?.global_name||user.displayName||"");
     user.roles=Array.isArray(member?.roles)?member.roles.map(String):[];
     user.roleNames=[];
     if(member&&env.DISCORD_BOT_TOKEN){
