@@ -100,7 +100,26 @@ canvas#fx{position:fixed;inset:0;z-index:-2;pointer-events:none}
 }
 .navlinks button:hover,.navlinks button.active{color:#fff;background:rgba(255,255,255,.075)}
 .nav-counter{border:0;background:transparent;color:#aaa;padding:11px 13px;border-radius:14px;font-weight:600;font-size:12px;text-decoration:none;cursor:pointer;transition:.25s var(--ease)}
-.nav-counter:hover{color:#fff;background:rgba(255,255,255,.075)}
+.nav-counter:hover{color:#fff;background:rgba(255,255,255,.075)}.dj-andrs-link{border:1px solid rgba(255,106,0,.14)!important;background:rgba(255,106,0,.055)!important;color:#ff9a55!important}
+.dj-andrs-link:hover{color:#fff!important;background:rgba(255,106,0,.12)!important;border-color:rgba(255,140,70,.24)!important}
+.site-warning{position:fixed;inset:0;z-index:200;display:grid;place-items:center;padding:24px;background:rgba(0,0,0,.48);backdrop-filter:blur(18px) saturate(125%);-webkit-backdrop-filter:blur(18px) saturate(125%);opacity:0;visibility:hidden;transition:.35s var(--ease)}
+.site-warning.open{opacity:1;visibility:visible}
+.site-warning-card{width:min(520px,100%);padding:34px;border-radius:32px;background:linear-gradient(145deg,rgba(28,27,25,.82),rgba(12,11,10,.68));border:1px solid rgba(255,255,255,.14);box-shadow:0 40px 120px rgba(0,0,0,.58),inset 0 1px rgba(255,255,255,.12);backdrop-filter:blur(32px) saturate(150%);-webkit-backdrop-filter:blur(32px) saturate(150%);transform:translateY(14px) scale(.97);transition:.45s var(--ease)}
+.site-warning.open .site-warning-card{transform:none}
+.warning-icon{width:52px;height:52px;border-radius:17px;display:grid;place-items:center;margin-bottom:22px;background:rgba(255,106,0,.12);border:1px solid rgba(255,106,0,.2);color:#ff914f}
+.warning-icon svg{width:24px;height:24px}
+.site-warning-card .kicker{margin-bottom:8px}
+.site-warning-card h3{font-size:30px;letter-spacing:-1.3px;margin-bottom:10px}
+.site-warning-card p{color:#aaa6a1;line-height:1.65;font-size:14px}
+.warning-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:26px}
+.warning-actions .btn{min-width:105px}
+.warning-actions .btn.primary{border:0}
+.theme-light .site-warning{background:rgba(255,255,255,.38)}
+.theme-light .site-warning-card{background:linear-gradient(145deg,rgba(255,255,255,.86),rgba(245,244,241,.72));border-color:rgba(0,0,0,.1);box-shadow:0 40px 120px rgba(0,0,0,.2),inset 0 1px rgba(255,255,255,.9)}
+.theme-light .site-warning-card p{color:#686868}
+.theme-light .site-warning-card .btn:not(.primary){color:#222;background:rgba(0,0,0,.045);border-color:rgba(0,0,0,.1)}
+@media(max-width:850px){.dj-andrs-link{display:none}}
+@media(max-width:520px){.site-warning{padding:15px}.site-warning-card{padding:27px;border-radius:27px}.site-warning-card h3{font-size:26px}.warning-actions{flex-direction:column-reverse}.warning-actions .btn{width:100%}}
 .live-counter{margin-top:18px;padding:30px;border-radius:30px;background:linear-gradient(145deg,rgba(255,255,255,.085),rgba(255,255,255,.025));border:1px solid rgba(255,255,255,.105);backdrop-filter:blur(25px) saturate(135%);box-shadow:inset 0 1px rgba(255,255,255,.08),0 24px 70px rgba(0,0,0,.23)}
 .live-counter-head{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;margin-bottom:20px}.live-counter-head .kicker{margin-bottom:7px}.live-counter-status{font-size:10px;color:#77736f;text-transform:uppercase;letter-spacing:1px}.live-counter-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.live-stat{padding:20px;border-radius:22px;background:rgba(0,0,0,.2);border:1px solid rgba(255,255,255,.07)}.live-stat strong{display:block;font-size:32px;letter-spacing:-1.5px}.live-stat span{display:block;margin-top:5px;color:#8e8a85;font-size:10px;text-transform:uppercase;letter-spacing:1.1px}.live-stat small{display:block;margin-top:9px;color:#66625e;font-size:10px}.live-stat.loading strong{opacity:.45}
 @media(max-width:520px){.live-counter{padding:23px}.live-counter-grid{grid-template-columns:1fr}.live-counter-head{align-items:flex-start;flex-direction:column;gap:5px}}
@@ -291,7 +310,7 @@ footer b{color:#9a9691}
 <header class="nav">
   <a class="brand" href="#" onclick="showPage('home');return false;">
     <img src="https://cdn.discordapp.com/attachments/1516127870882287729/1557409458269978754/Logo_A_orange_fluide_sur_fond_noir.png?backend=b2&ex=6ac7b216&is=6ac66096&hm=f5670ed2c168c421ee847215c7dc5c7133711a25aab0ff8aafa9de4ad6f2d8b4&v=20261007-1710" alt="Andreas Music Hub">
-    <span><strong>Andreas Music Hub</strong><small>COMMUNITY • V1.2.3</small></span>
+    <span><strong>Andreas Music Hub</strong><small>COMMUNITY • V1.2.4</small></span>
   </a>
   <nav class="navlinks" aria-label="Main navigation">
     <button data-page="home" onclick="showPage('home')">Home</button>
@@ -300,6 +319,7 @@ footer b{color:#9a9691}
     <button data-page="server" onclick="showPage('server')">The Server</button>
     <button data-page="live-counter" onclick="showPage('live-counter')">Live Counter</button>
     <a class="nav-counter" href="/vip/">VIP</a>
+    <button class="dj-andrs-link" type="button" onclick="openSiteWarning()">DJ ANDRS</button>
   </nav>
   <div class="settings-wrap">
     <button class="settings-btn" id="settings-btn" aria-label="Settings" aria-expanded="false" onclick="toggleSettings()">
@@ -318,6 +338,22 @@ footer b{color:#9a9691}
   </div>
   <a class="navjoin" href="https://discord.gg/yuaaf5YNfE" target="_blank" rel="noopener">Join now ↗</a>
 </header>
+
+
+<div class="site-warning" id="site-warning" role="dialog" aria-modal="true" aria-labelledby="site-warning-title" aria-hidden="true" onclick="handleWarningBackdrop(event)">
+  <div class="site-warning-card">
+    <div class="warning-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3 2.8 20h18.4L12 3Z"/><path d="M12 9v5M12 17.5v.1"/></svg>
+    </div>
+    <div class="kicker">External website</div>
+    <h3 id="site-warning-title">You're leaving Andreas Music Hub.</h3>
+    <p>You are about to open <b>DJ ANDRS</b>, a separate website. The current page will stay here, but your browser will navigate to the new site.</p>
+    <div class="warning-actions">
+      <button class="btn" type="button" onclick="closeSiteWarning()">Go back</button>
+      <button class="btn primary" type="button" onclick="goToDjAndrs()">Okay ↗</button>
+    </div>
+  </div>
+</div>
 
 <main>
 <section id="home" class="active">
@@ -538,6 +574,27 @@ const THEME_KEY='amh-theme';
 function resolvedTheme(theme){return theme==='system'?(matchMedia('(prefers-color-scheme: light)').matches?'light':'dark'):theme}
 function applyTheme(theme,animate=true){const root=document.documentElement;const resolved=resolvedTheme(theme);if(animate){root.classList.add('theme-transition');setTimeout(()=>root.classList.remove('theme-transition'),800)}root.classList.toggle('theme-light',resolved==='light');localStorage.setItem(THEME_KEY,theme);document.querySelectorAll('.theme-option').forEach(b=>b.classList.toggle('active',b.dataset.theme===theme))}
 function setTheme(theme){applyTheme(theme,true)}
+const DJ_ANDRS_URL="https://dj-andrs.pages.dev/";
+function openSiteWarning(){
+  const modal=document.getElementById("site-warning");
+  if(!modal)return;
+  modal.classList.add("open");
+  modal.setAttribute("aria-hidden","false");
+  document.body.style.overflow="hidden";
+}
+function closeSiteWarning(){
+  const modal=document.getElementById("site-warning");
+  if(!modal)return;
+  modal.classList.remove("open");
+  modal.setAttribute("aria-hidden","true");
+  document.body.style.overflow="";
+}
+function handleWarningBackdrop(e){
+  if(e.target===e.currentTarget)closeSiteWarning();
+}
+function goToDjAndrs(){window.location.href=DJ_ANDRS_URL}
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeSiteWarning()});
+
 function toggleSettings(){const menu=document.getElementById('settings-menu'),btn=document.getElementById('settings-btn');const open=!menu.classList.contains('open');menu.classList.toggle('open',open);btn.classList.toggle('open',open);btn.setAttribute('aria-expanded',open)}
 document.addEventListener('click',e=>{const wrap=document.querySelector('.settings-wrap');if(wrap&&!wrap.contains(e.target)){document.getElementById('settings-menu')?.classList.remove('open');document.getElementById('settings-btn')?.classList.remove('open')}});
 const savedTheme=localStorage.getItem(THEME_KEY)||'dark';applyTheme(savedTheme,false);matchMedia('(prefers-color-scheme: light)').addEventListener('change',()=>{if((localStorage.getItem(THEME_KEY)||'dark')==='system')applyTheme('system',true)});
