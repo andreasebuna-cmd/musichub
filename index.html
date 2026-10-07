@@ -493,6 +493,8 @@ body.vip-mode .top-menu-btn span{background:#f5c76a}
 .theme-light .top-menu-btn span{background:#555}.theme-light .top-menu-btn:hover{background:rgba(255,255,255,.9);border-color:rgba(0,0,0,.16)}.theme-light .top-menu-btn:hover span{background:#111}
 .theme-light .main-menu-head{border-bottom-color:rgba(0,0,0,.08)}.theme-light .main-menu-subtitle,.theme-light .main-menu-meta{color:#6d6a66}.theme-light .main-menu-title{color:#171717}.theme-light .main-menu-item{color:#171717}.theme-light .main-menu-item:hover,.theme-light .main-menu-item:focus-visible{background:rgba(255,106,0,.08);border-color:rgba(255,106,0,.14);box-shadow:inset 2px 0 rgba(255,106,0,.4)}.theme-light .main-menu-item.active{background:rgba(255,106,0,.07);border-color:rgba(255,106,0,.12)}.theme-light .main-menu-icon{background:rgba(0,0,0,.045);border-color:rgba(0,0,0,.08)}.theme-light .main-menu-settings{color:#5f5b56}.theme-light .main-menu-settings:hover,.theme-light .main-menu-settings:focus-visible{color:#111}
 .theme-light .nav-search{background:rgba(0,0,0,.035);border-color:rgba(0,0,0,.1)}.theme-light .nav-search input{color:#171717}.theme-light .nav-search input::placeholder{color:#777}.theme-light .nav-search svg{color:#666}.theme-light .search-suggestions{background:rgba(255,255,255,.74);border-color:rgba(0,0,0,.1);box-shadow:0 18px 60px rgba(0,0,0,.12),inset 0 1px rgba(255,255,255,.9)}.theme-light .search-suggestion{color:#171717}.theme-light .search-suggestion-meta{color:#6d6a66}.theme-light .search-suggestion-icon{background:rgba(0,0,0,.045);border-color:rgba(0,0,0,.08)}
+
+.profile-page{padding-top:125px}.profile-shell{max-width:980px;margin:0 auto}.profile-card{position:relative;overflow:hidden;padding:34px;border:1px solid var(--border);border-radius:30px;background:linear-gradient(145deg,rgba(255,255,255,.085),rgba(255,255,255,.025));box-shadow:0 30px 90px rgba(0,0,0,.35),inset 0 1px rgba(255,255,255,.08);backdrop-filter:blur(22px)}.profile-card:before{content:"";position:absolute;width:360px;height:360px;right:-120px;top:-180px;border-radius:50%;background:radial-gradient(circle,rgba(255,106,0,.2),transparent 68%);pointer-events:none}.profile-identity{display:flex;align-items:center;gap:22px;position:relative}.profile-avatar{width:104px;height:104px;border-radius:28px;object-fit:cover;border:1px solid rgba(255,255,255,.16);box-shadow:0 18px 45px rgba(0,0,0,.35)}.profile-name{margin:0;font-size:clamp(28px,4vw,46px);letter-spacing:-1.8px}.profile-sub{margin:7px 0 0;color:#918d88;font-size:12px}.profile-status{display:inline-flex;align-items:center;gap:7px;margin-top:12px;padding:7px 10px;border-radius:999px;background:rgba(68,220,130,.08);border:1px solid rgba(68,220,130,.16);color:#8fe4ad;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.7px}.profile-status-dot{width:7px;height:7px;border-radius:50%;background:#4ddf84;box-shadow:0 0 12px rgba(77,223,132,.55)}.profile-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:24px}.profile-stat{padding:18px;border:1px solid rgba(255,255,255,.08);border-radius:18px;background:rgba(255,255,255,.035)}.profile-stat-label{font-size:10px;color:#77736f;text-transform:uppercase;letter-spacing:.7px}.profile-stat-value{margin-top:8px;font-size:14px;font-weight:800}.profile-roles{display:flex;flex-wrap:wrap;gap:8px;margin-top:9px}.profile-role{padding:7px 10px;border-radius:999px;border:1px solid rgba(255,106,0,.18);background:rgba(255,106,0,.08);color:#ffad76;font-size:10px;font-weight:800}.profile-note{margin-top:20px;padding:14px 16px;border-radius:16px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.06);color:#85817c;font-size:11px;line-height:1.55}@media(max-width:700px){.profile-card{padding:22px}.profile-identity{align-items:flex-start}.profile-avatar{width:82px;height:82px;border-radius:22px}.profile-grid{grid-template-columns:1fr}.profile-page{padding-top:105px}}
 </style>
 </head>
 
@@ -745,6 +747,13 @@ body.vip-mode .top-menu-btn span{background:#f5c76a}
     </div>
   </div>
 </section>
+<section id="profil" class="profile-page">
+  <div class="profile-shell">
+    <div class="kicker">Discord account</div>
+    <h2>Your profile.<br><span class="gradient">Inside Music Hub.</span></h2>
+    <div id="profile-content"></div>
+  </div>
+</section>
 <section id="vip" class="vip-page">
   <div class="vip-hero">
     <div>
@@ -856,12 +865,15 @@ document.addEventListener("keydown",e=>{if(e.key==="Escape"){closeSiteWarning();
 const LANGUAGE_KEY='amh-language';
 const I18N={
   fr:{
+    "Profile":"Profil","Moderation":"Modération","Discord account":"Compte Discord","Server membership":"Présence sur le serveur","Member":"Membre","Discord ID":"ID Discord","Roles":"Rôles","Online status":"Statut en ligne","Connected to Music Hub":"Connecté à Music Hub","Online status unavailable":"Statut Discord indisponible","Yes":"Oui","No":"Non","No roles":"Aucun rôle","You are a member of this server.":"Vous êtes membre de ce serveur.","Your Discord presence is not available yet.":"Votre présence Discord n’est pas encore disponible.",
     "Live • Discord connected":"Live • Discord connecté","Live count temporarily unavailable":"Compteur live temporairement indisponible",
     "COMMUNITY • V1.2.7":"COMMUNAUTÉ • V1.2.6","Home":"Accueil","About":"À propos","Community":"Communauté","The Server":"Le serveur","Live Counter":"Compteur live","VIP":"VIP","DJ ANDRS":"DJ ANDRS","Join now ↗":"Rejoindre ↗","CONNECT WITH DISCORD":"SE CONNECTER À DISCORD","External website":"Site externe","You're leaving Andreas Music Hub.":"Vous quittez Andreas Music Hub.","Go back":"Retour","Okay ↗":"Continuer ↗","Community • Halloween 2026 Event":"Communauté • Événement Halloween 2026","A place to":"Un endroit où","belong.":"appartenir.","Join the server ↗":"Rejoindre le serveur ↗","Discover the community":"Découvrir la communauté","What we're about":"Notre communauté","More than":"Bien plus qu’un","a Discord server.":"serveur Discord.","Community first":"La communauté d’abord","Creative energy":"Énergie créative","Good atmosphere":"Bonne ambiance","The philosophy":"La philosophie","Built for people, not numbers.":"Pensé pour les personnes, pas les chiffres.","Possibilities":"Possibilités","Online":"En ligne","The experience":"L’expérience","Events. Community. Surprises.":"Événements. Communauté. Surprises.","Explore →":"Explorer →","The community":"La communauté","Come for the server.":"Venez pour le serveur.","Stay for the people.":"Restez pour les gens.","Chat & hangout":"Discuter & se retrouver","Share & create":"Partager & créer","Events & activities":"Événements & activités","Seasonal events":"Événements saisonniers","Discover people":"Découvrir des personnes","Room to grow":"Place pour grandir","Inside the server":"Dans le serveur","Simple structure.":"Structure simple.","Premium experience.":"Expérience premium.","Talk. Share. Connect.":"Parler. Partager. Se connecter.","More than just chatting.":"Bien plus que discuter.","Something is always coming.":"Quelque chose arrive toujours.","More to come.":"La suite arrive.","Live statistics":"Statistiques live","Server":"Serveur","live.":"en direct.","Live Counter":"Compteur live","Connecting to Discord…":"Connexion à Discord…","Updates automatically":"Mises à jour automatiques","Members":"Membres","Approximate live count from Discord":"Nombre approximatif en direct depuis Discord","Bots":"Bots","Your next server":"Votre prochain serveur","Ready to":"Prêt à","join us?":"nous rejoindre ?","Join Andreas Music Hub ↗":"Rejoindre Andreas Music Hub ↗","Preferences":"Préférences","Site":"Paramètres du","settings.":"site.","Appearance":"Apparence","Theme":"Thème","Choose how the site should look.":"Choisissez l’apparence du site.","Dark":"Sombre","Light":"Clair","System":"Système","Language":"Langue","Site language":"Langue du site","Choose your preferred language.":"Choisissez votre langue.","English":"Anglais","Français":"Français","Español":"Espagnol","Deutsch":"Allemand","© 2026":"© 2026","Designed in":"Conçu en","black & orange":"noir & orange","Exclusive membership • VIP":"Abonnement exclusif • VIP","VIP.":"VIP.","What you get":"Ce que vous obtenez","More access.":"Plus d’accès.","More privileges.":"Plus de privilèges.","Buy VIP for $2":"Acheter VIP pour 2 $","Purchases are currently unavailable.":"Les achats sont actuellement indisponibles.","Exclusive VIP channels":"Salons VIP exclusifs","More privileges":"Plus de privilèges","Early access":"Accès anticipé","VIP-only events":"Événements réservés aux VIP","Exclusive surprises":"Surprises exclusives","Growing benefits":"Avantages évolutifs","VIP is only $2":"Le VIP coûte seulement 2 $","The VIP experience":"L’expérience VIP","Be there ":"Soyez là ","before everyone.":"avant tout le monde."},
   es:{
+    "Profile":"Perfil","Moderation":"Moderación","Discord account":"Cuenta de Discord","Server membership":"Pertenencia al servidor","Member":"Miembro","Discord ID":"ID de Discord","Roles":"Roles","Online status":"Estado en línea","Connected to Music Hub":"Conectado a Music Hub","Online status unavailable":"Estado de Discord no disponible","Yes":"Sí","No":"No","No roles":"Sin roles","You are a member of this server.":"Eres miembro de este servidor.","Your Discord presence is not available yet.":"Tu presencia de Discord aún no está disponible.",
     "Live • Discord connected":"En direct • Discord connecté","Live count temporarily unavailable":"Contador live temporalmente no disponible",
     "COMMUNITY • V1.2.7":"COMUNIDAD • V1.2.6","Home":"Inicio","About":"Acerca de","Community":"Comunidad","The Server":"El servidor","Live Counter":"Contador en vivo","VIP":"VIP","Join now ↗":"Unirse ↗","CONNECT WITH DISCORD":"CONECTARSE A DISCORD","External website":"Sitio externo","You're leaving Andreas Music Hub.":"Estás saliendo de Andreas Music Hub.","Go back":"Volver","Okay ↗":"Continuar ↗","Community • Halloween 2026 Event":"Comunidad • Evento de Halloween 2026","A place to":"Un lugar para","belong.":"pertenecer.","Join the server ↗":"Unirse al servidor ↗","Discover the community":"Descubrir la comunidad","What we're about":"Sobre nosotros","More than":"Más que un","a Discord server.":"servidor de Discord.","Community first":"La comunidad primero","Creative energy":"Energía creativa","Good atmosphere":"Buen ambiente","The philosophy":"La filosofía","Built for people, not numbers.":"Hecho para personas, no para números.","Possibilities":"Posibilidades","Online":"En línea","The experience":"La experiencia","Events. Community. Surprises.":"Eventos. Comunidad. Sorpresas.","Explore →":"Explorar →","The community":"La comunidad","Come for the server.":"Ven por el servidor.","Stay for the people.":"Quédate por la gente.","Chat & hangout":"Chat y convivencia","Share & create":"Compartir y crear","Events & activities":"Eventos y actividades","Seasonal events":"Eventos de temporada","Discover people":"Descubrir personas","Room to grow":"Espacio para crecer","Inside the server":"Dentro del servidor","Simple structure.":"Estructura simple.","Premium experience.":"Experiencia premium.","Talk. Share. Connect.":"Habla. Comparte. Conecta.","More than just chatting.":"Mucho más que hablar.","Something is always coming.":"Siempre viene algo nuevo.","More to come.":"Habrá más.","Live statistics":"Estadísticas en vivo","Server":"Servidor","live.":"en vivo.","Connecting to Discord…":"Conectando con Discord…","Updates automatically":"Se actualiza automáticamente","Members":"Miembros","Approximate live count from Discord":"Cantidad aproximada en vivo desde Discord","Bots":"Bots","Your next server":"Tu próximo servidor","Ready to":"¿Listo para","join us?":"unirte?","Join Andreas Music Hub ↗":"Unirse a Andreas Music Hub ↗","Preferences":"Preferencias","Site":"Ajustes del","settings.":"sitio.","Appearance":"Apariencia","Theme":"Tema","Choose how the site should look.":"Elige cómo quieres que se vea el sitio.","Dark":"Oscuro","Light":"Claro","System":"Sistema","Language":"Idioma","Site language":"Idioma del sitio","Choose your preferred language.":"Elige tu idioma preferido.","English":"Inglés","Français":"Francés","Español":"Español","Deutsch":"Alemán","Designed in":"Diseñado en","black & orange":"negro y naranja","Exclusive membership • VIP":"Membresía exclusiva • VIP","What you get":"Lo que obtienes","More access.":"Más acceso.","More privileges.":"Más privilegios.","Buy VIP for $2":"Comprar VIP por 2 $","Purchases are currently unavailable.":"Las compras no están disponibles actualmente.","Exclusive VIP channels":"Canales VIP exclusivos","More privileges":"Más privilegios","Early access":"Acceso anticipado","VIP-only events":"Eventos solo para VIP","Exclusive surprises":"Sorpresas exclusivas","Growing benefits":"Beneficios en crecimiento","VIP is only $2":"VIP cuesta solo 2 $","The VIP experience":"La experiencia VIP","Be there ":"Estar allí ","before everyone.":"antes que todos."},
   de:{
+    "Profile":"Profil","Moderation":"Moderation","Discord account":"Discord-Konto","Server membership":"Servermitgliedschaft","Member":"Mitglied","Discord ID":"Discord-ID","Roles":"Rollen","Online status":"Online-Status","Connected to Music Hub":"Mit Music Hub verbunden","Online status unavailable":"Discord-Status nicht verfügbar","Yes":"Ja","No":"Nein","No roles":"Keine Rollen","You are a member of this server.":"Du bist Mitglied dieses Servers.","Your Discord presence is not yet available.":"Dein Discord-Status ist noch nicht verfügbar.",
     "Live • Discord connected":"Live • Discord verbunden","Live count temporarily unavailable":"Live-Zähler vorübergehend nicht verfügbar",
     "COMMUNITY • V1.2.7":"COMMUNITY • V1.2.7","Home":"Startseite","About":"Über uns","Community":"Community","The Server":"Der Server","Live Counter":"Live-Zähler","VIP":"VIP","Join now ↗":"Beitreten ↗","CONNECT WITH DISCORD":"MIT DISCORD VERBINDEN","External website":"Externe Website","You're leaving Andreas Music Hub.":"Du verlässt Andreas Music Hub.","Go back":"Zurück","Okay ↗":"Weiter ↗","Community • Halloween 2026 Event":"Community • Halloween 2026 Event","A place to":"Ein Ort zum","belong.":"Dazugehören.","Join the server ↗":"Server beitreten ↗","Discover the community":"Community entdecken","What we're about":"Worum es geht","More than":"Mehr als ein","a Discord server.":"Discord-Server.","Community first":"Community zuerst","Creative energy":"Kreative Energie","Good atmosphere":"Gute Atmosphäre","The philosophy":"Die Philosophie","Built for people, not numbers.":"Für Menschen gebaut, nicht für Zahlen.","Possibilities":"Möglichkeiten","Online":"Online","The experience":"Das Erlebnis","Events. Community. Surprises.":"Events. Community. Überraschungen.","Explore →":"Entdecken →","The community":"Die Community","Come for the server.":"Komm wegen des Servers.","Stay for the people.":"Bleib wegen der Menschen.","Chat & hangout":"Chatten & abhängen","Share & create":"Teilen & erstellen","Events & activities":"Events & Aktivitäten","Seasonal events":"Saisonale Events","Discover people":"Menschen entdecken","Room to grow":"Raum zum Wachsen","Inside the server":"Im Server","Simple structure.":"Einfache Struktur.","Premium experience.":"Premium-Erlebnis.","Talk. Share. Connect.":"Reden. Teilen. Verbinden.","More than just chatting.":"Mehr als nur chatten.","Something is always coming.":"Es kommt immer etwas Neues.","More to come.":"Mehr kommt noch.","Live statistics":"Live-Statistiken","Server":"Server","live.":"live.","Connecting to Discord…":"Verbindung zu Discord…","Updates automatically":"Automatische Updates","Members":"Mitglieder","Approximate live count from Discord":"Ungefährer Live-Stand von Discord","Bots":"Bots","Your next server":"Dein nächster Server","Ready to":"Bereit,","join us?":"uns beizutreten?","Join Andreas Music Hub ↗":"Andreas Music Hub beitreten ↗","Preferences":"Einstellungen","Site":"Website-","settings.":"Einstellungen.","Appearance":"Darstellung","Theme":"Theme","Choose how the site should look.":"Wähle das Aussehen der Website.","Dark":"Dunkel","Light":"Hell","System":"System","Language":"Sprache","Site language":"Website-Sprache","Choose your preferred language.":"Wähle deine bevorzugte Sprache.","English":"Englisch","Français":"Französisch","Español":"Spanisch","Deutsch":"Deutsch","Designed in":"Designt in","black & orange":"Schwarz & Orange","Exclusive membership • VIP":"Exklusive Mitgliedschaft • VIP","What you get":"Deine Vorteile","More access.":"Mehr Zugang.","More privileges.":"Mehr Vorteile.","Buy VIP for $2":"VIP für 2 $ kaufen","Purchases are currently unavailable.":"Käufe sind derzeit nicht verfügbar.","Exclusive VIP channels":"Exklusive VIP-Kanäle","More privileges":"Mehr Vorteile","Early access":"Früher Zugang","VIP-only events":"VIP-Events","Exclusive surprises":"Exklusive Überraschungen","Growing benefits":"Wachsende Vorteile","VIP is only $2":"VIP kostet nur 2 $","The VIP experience":"Das VIP-Erlebnis","Be there ":"Sei dabei ","before everyone.":"bevor es alle sind."}
 };
@@ -937,7 +949,7 @@ translateSite();
 matchMedia('(prefers-color-scheme: light)').addEventListener('change',()=>{if((localStorage.getItem(THEME_KEY)||'dark')==='system')applyTheme('system',true)});document.addEventListener('click',e=>{if(!e.target.closest('.language-select-wrap'))closeLanguageMenu()});
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLanguageMenu()});
 
-const pages = ["home","about","community","server","live-counter","join","vip","settings"];
+const pages = ["home","about","community","server","live-counter","join","vip","settings","profil"];
 
 const searchDestinations = [
   {id:"home",title:"Home",meta:"Main page",icon:"⌂"},
@@ -973,6 +985,37 @@ function getDiscordNavigationItems(){
   if(canSeeDiscordModeration())items.push({id:"moderation",title:translateText("Moderation"),meta:"",icon:"◇"});
   return items;
 }
+function renderDiscordProfile(){
+  const root=document.getElementById("profile-content");
+  if(!root)return;
+  if(!isDiscordGuildMember()){
+    root.innerHTML='<div class="profile-card"><div class="profile-note">Connect your Discord account to view your Music Hub profile.</div></div>';
+    return;
+  }
+  const avatar=discordUser.avatar||"https://cdn.discordapp.com/embed/avatars/0.png";
+  const roles=discordUser.roleNames||[];
+  root.innerHTML=`
+    <div class="profile-card">
+      <div class="profile-identity">
+        <img class="profile-avatar" src="${avatar}" alt="">
+        <div>
+          <div class="profile-status"><span class="profile-status-dot"></span>${translateText("Connected to Music Hub")}</div>
+          <h3 class="profile-name">${escapeHtml(discordUser.username||discordUser.id)}</h3>
+          <p class="profile-sub">${translateText("Discord account")}</p>
+        </div>
+      </div>
+      <div class="profile-grid">
+        <div class="profile-stat"><div class="profile-stat-label">${translateText("Server membership")}</div><div class="profile-stat-value">${translateText("Member")} · ${translateText("Yes")}</div></div>
+        <div class="profile-stat"><div class="profile-stat-label">${translateText("Discord ID")}</div><div class="profile-stat-value">${escapeHtml(discordUser.id)}</div></div>
+        <div class="profile-stat"><div class="profile-stat-label">${translateText("Online status")}</div><div class="profile-stat-value">${translateText("Online status unavailable")}</div></div>
+      </div>
+      <div class="profile-stat" style="margin-top:12px">
+        <div class="profile-stat-label">${translateText("Roles")}</div>
+        <div class="profile-roles">${roles.length?roles.map(role=>`<span class="profile-role">${escapeHtml(role)}</span>`).join(""):`<span class="profile-sub">${translateText("No roles")}</span>`}</div>
+      </div>
+      <div class="profile-note">${translateText("You are a member of this server.")} ${translateText("Your Discord presence is not available yet.")}</div>
+    </div>`;
+}
 function setDiscordUser(user){
   if(!user||typeof user!=="object"){discordUser=null;}
   else{
@@ -981,10 +1024,11 @@ function setDiscordUser(user){
       username:typeof user.username==="string"?user.username:"",
       avatar:typeof user.avatar==="string"?user.avatar:"",
       guildMember:user.guildMember===true,
-      roles:Array.isArray(user.roles)?user.roles.filter(role=>typeof role==="string"):[]
+      roles:Array.isArray(user.roles)?user.roles.filter(role=>typeof role==="string"):[],roleNames:Array.isArray(user.roleNames)?user.roleNames.filter(role=>typeof role==="string"):[]
     };
   }
   renderDiscordNavigation();
+  renderDiscordProfile();
 }
 window.setDiscordUser=setDiscordUser;
 
@@ -1036,7 +1080,7 @@ async function logoutDiscord(){
 function navigateDiscordSection(id){
   if(id==="profil"&&!isDiscordGuildMember())return false;
   if(id==="moderation"&&!canSeeDiscordModeration())return false;
-  history.replaceState(null,"","#"+id);syncMainMenuActive();return true;
+  showPage(id);return true;
 }
 function handleDiscordProfileLink(event){
   if(!isDiscordGuildMember())return;
@@ -1159,6 +1203,7 @@ window.addEventListener("load",()=>{
   showPage(pages.includes(id)?id:"home");
   initSiteSearch();
   renderDiscordNavigation();
+  renderDiscordProfile();
   loadDiscordSession();
 });
 
