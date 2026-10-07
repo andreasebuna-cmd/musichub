@@ -21,6 +21,7 @@ export async function onRequestGet({request,env}){
   const publicProfile={
     id:String(profile.id),
     username:String(profile.username||""),
+    displayName:String(profile.displayName||""),
     avatar:String(profile.avatar||""),
     guildMember:true,
     privacy:profile.privacy==="public"?"public":"private"
