@@ -101,17 +101,20 @@ canvas#fx{position:fixed;inset:0;z-index:-2;pointer-events:none}
 }
 .brand{display:flex;align-items:center;gap:11px;text-decoration:none;color:white;min-width:max-content}
 .brand img{width:42px;height:42px;border-radius:14px;object-fit:cover;box-shadow:0 0 30px rgba(255,106,0,.25)}
+.brand-copy{display:flex;flex-direction:column;gap:2px}
 .brand strong{font-size:15px;letter-spacing:-.3px}
-.brand small{display:block;color:#999;font-size:10px;margin-top:2px}
-.navlinks{display:flex;gap:4px;align-items:center}
-.navlinks button{
-  border:0;background:transparent;color:#aaa;padding:11px 13px;border-radius:14px;
-  font-weight:600;font-size:12px;cursor:pointer;transition:.25s var(--ease)
-}
-.navlinks button:hover,.navlinks button.active{color:#fff;background:rgba(255,255,255,.075)}
-.nav-counter{border:0;background:transparent;color:#aaa;padding:11px 13px;border-radius:14px;font-weight:600;font-size:12px;text-decoration:none;cursor:pointer;transition:.25s var(--ease)}
-.nav-counter:hover{color:#fff;background:rgba(255,255,255,.075)}.dj-andrs-link{border:1px solid rgba(255,106,0,.14)!important;background:rgba(255,106,0,.055)!important;color:#ff9a55!important}
-.dj-andrs-link:hover{color:#fff!important;background:rgba(255,106,0,.12)!important;border-color:rgba(255,140,70,.24)!important}
+.brand small{color:#999;font-size:10px;letter-spacing:.45px;margin:0}
+.brand small b{color:#ff7b27;font-weight:800;margin:0 2px}
+.nav-search{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:min(360px,34vw);height:42px;display:flex;align-items:center;gap:9px;padding:0 14px;border:1px solid rgba(255,255,255,.1);border-radius:14px;background:rgba(255,255,255,.045);box-shadow:inset 0 1px rgba(255,255,255,.06);transition:.25s var(--ease)}
+.nav-search:focus-within{border-color:rgba(255,106,0,.3);background:rgba(255,255,255,.065);box-shadow:0 0 0 4px rgba(255,106,0,.055),inset 0 1px rgba(255,255,255,.07)}
+.nav-search svg{width:16px;height:16px;flex:0 0 auto;color:#777}
+.nav-search input{width:100%;border:0;outline:0;background:transparent;color:#eee;font:600 12px inherit}
+.nav-search input::placeholder{color:#777}
+.nav-actions{display:flex;align-items:center;gap:9px;margin-left:auto}
+.settings-wrap{position:relative}
+.settings-btn{width:42px;height:42px;border:1px solid rgba(255,255,255,.1);border-radius:14px;background:rgba(255,255,255,.055);color:#aaa;display:grid;place-items:center;cursor:pointer;transition:.25s var(--ease);font-size:17px}
+.settings-btn:hover,.settings-btn.open{color:#fff;background:rgba(255,255,255,.1);transform:rotate(18deg)}
+.settings-btn svg{width:18px;height:18px}
 .site-warning{position:fixed;inset:0;z-index:200;display:grid;place-items:center;padding:24px;background:rgba(0,0,0,.48);backdrop-filter:blur(18px) saturate(125%);-webkit-backdrop-filter:blur(18px) saturate(125%);opacity:0;visibility:hidden;transition:.35s var(--ease)}
 .site-warning.open{opacity:1;visibility:visible}
 .site-warning-card{width:min(520px,100%);padding:34px;border-radius:32px;background:linear-gradient(145deg,rgba(28,27,25,.82),rgba(12,11,10,.68));border:1px solid rgba(255,255,255,.14);box-shadow:0 40px 120px rgba(0,0,0,.58),inset 0 1px rgba(255,255,255,.12);backdrop-filter:blur(32px) saturate(150%);-webkit-backdrop-filter:blur(32px) saturate(150%);transform:translateY(14px) scale(.97);transition:.45s var(--ease)}
@@ -285,7 +288,9 @@ footer{
 footer b{color:#9a9691}
 
 @media(max-width:850px){
-  .navlinks{display:none}
+  .nav-search{width:min(280px,32vw)}
+  .nav-search input{font-size:11px}
+
   .hero{grid-template-columns:1fr;gap:55px;padding-top:50px}
   .hero-copy{order:1}.emblem-wrap{order:2}
   h1{letter-spacing:-4px}
@@ -298,8 +303,10 @@ footer b{color:#9a9691}
   .nav{top:10px;width:calc(100% - 18px);height:64px}
   .brand img{width:38px;height:38px}
   .brand strong{font-size:13px}
-  .brand small{display:none}
+  .brand small{font-size:9px}
   .navjoin{padding:11px 13px}
+  .settings-btn{width:40px;height:40px}
+  .nav-actions{gap:6px}
   .hero{min-height:auto;padding-top:30px}
   h1{font-size:55px}
   .hero p{font-size:15px}
@@ -379,23 +386,20 @@ body.vip-mode .vip-page .kicker,body.vip-mode .vip-page .icon{color:#f5c76a}
 <header class="nav">
   <a class="brand" href="#" onclick="showPage('home');return false;">
     <img src="https://cdn.discordapp.com/attachments/1516127870882287729/1557409458269978754/Logo_A_orange_fluide_sur_fond_noir.png?backend=b2&ex=6ac7b216&is=6ac66096&hm=f5670ed2c168c421ee847215c7dc5c7133711a25aab0ff8aafa9de4ad6f2d8b4&v=20261007-1710" alt="Andreas Music Hub">
-    <span><strong>Andreas Music Hub</strong><small>COMMUNITY • V1.2.8</small></span>
+    <span class="brand-copy"><strong>Andreas Music Hub</strong><small>V1.2.8 <b>•</b> Community</small></span>
   </a>
-  <nav class="navlinks" aria-label="Main navigation">
-    <button data-page="home" onclick="showPage('home')">Home</button>
-    <button data-page="about" onclick="showPage('about')">About</button>
-    <button data-page="community" onclick="showPage('community')">Community</button>
-    <button data-page="server" onclick="showPage('server')">The Server</button>
-    <button data-page="live-counter" onclick="showPage('live-counter')">Live Counter</button>
-    <button class="nav-counter" data-page="vip" onclick="showPage('vip')">VIP</button>
-    <button class="dj-andrs-link" type="button" onclick="openSiteWarning()">DJ ANDRS</button>
-  </nav>
-  <div class="settings-wrap">
-    <button class="settings-btn" id="settings-btn" aria-label="Settings" aria-expanded="false" onclick="showPage('settings')">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 15.2a3.2 3.2 0 1 0 0-6.4 3.2 3.2 0 0 0 0 6.4Z"/><path d="m19.4 15 .1.1a1.9 1.9 0 0 1-2.7 2.7l-.1-.1a1.9 1.9 0 0 0-3.2 1.3v.2a1.9 1.9 0 0 1-3.8 0V19a1.9 1.9 0 0 0-3.2-1.3l-.1.1a1.9 1.9 0 0 1-2.7-2.7l.1-.1A1.9 1.9 0 0 0 2.5 12a1.9 1.9 0 0 0 1.3-3.2l-.1-.1a1.9 1.9 0 0 1 2.7-2.7l.1.1A1.9 1.9 0 0 0 9.7 4.8v-.2a1.9 1.9 0 0 1 3.8 0v.2a1.9 1.9 0 0 0 3.2 1.3l.1-.1a1.9 1.9 0 0 1 2.7 2.7l-.1.1A1.9 1.9 0 0 0 20.5 12a1.9 1.9 0 0 0-1.1 3Z"/></svg>
-    </button>
+  <div class="nav-search" role="search">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="11" cy="11" r="6.8"/><path d="m16.2 16.2 4.2 4.2"/></svg>
+    <input type="search" placeholder="Search" aria-label="Search">
   </div>
-  <a class="navjoin" href="https://discord.gg/yuaaf5YNfE" target="_blank" rel="noopener">Join now ↗</a>
+  <div class="nav-actions">
+    <div class="settings-wrap">
+      <button class="settings-btn" id="settings-btn" aria-label="Settings" aria-expanded="false" onclick="showPage('settings')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 15.2a3.2 3.2 0 1 0 0-6.4 3.2 3.2 0 0 0 0 6.4Z"/><path d="m19.4 15 .1.1a1.9 1.9 0 0 1-2.7 2.7l-.1-.1a1.9 1.9 0 0 0-3.2 1.3v.2a1.9 1.9 0 0 1-3.8 0V19a1.9 1.9 0 0 0-3.2-1.3l-.1.1a1.9 1.9 0 1 1-2.7-2.7l.1-.1A1.9 1.9 0 0 0 2.5 12a1.9 1.9 0 0 0 1.3-3.2l-.1-.1a1.9 1.9 0 0 1 2.7-2.7l.1.1A1.9 1.9 0 0 0 9.7 4.8v-.2a1.9 1.9 0 0 1 3.8 0v.2a1.9 1.9 0 0 0 3.2 1.3l.1-.1a1.9 1.9 0 0 1 2.7 2.7l-.1.1A1.9 1.9 0 0 0 20.5 12a1.9 1.9 0 0 0-1.1 3Z"/></svg>
+      </button>
+    </div>
+    <a class="navjoin" href="https://discord.gg/yuaaf5YNfE" target="_blank" rel="noopener">Join now ↗</a>
+  </div>
 </header>
 
 
