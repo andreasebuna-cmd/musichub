@@ -44,6 +44,7 @@ export async function onRequestGet({request,env}){
   const sessionUser={
     id:String(user.id),
     username:String(user.username||""),
+    displayName:String(user.global_name||""),
     avatar:avatarUrl(user),
     guildMember:Boolean(member),
     roles,
