@@ -1337,7 +1337,7 @@ function initSiteSearch(){
     if(profile){closeSearchSuggestions();input.blur();showPage("profil");openMemberProfile(profile.dataset.profileId);}
   });
   document.addEventListener("click",e=>{
-    if(!e.target.closest("#site-search") && !e.target.closest("#search-suggestions"))closeSearchSuggestions();
+    if(!e.target.closest("#site-search") && !e.target.closest("#search-suggestions"))closeSearchSuggestions();\n    if(!e.target.closest("#notification-panel")&&!e.target.closest("#notification-btn"))closeNotifications();
     if(!e.target.closest("#main-menu") && !e.target.closest("#top-menu-btn"))closeMainMenu();
   });
   document.addEventListener("keydown",e=>{
