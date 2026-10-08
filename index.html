@@ -1031,9 +1031,8 @@ function canSeeDiscordModeration(){
   return isDiscordGuildMember()&&Array.isArray(roleIds)&&Array.isArray(discordUser.roles)&&roleIds.some(roleId=>discordUser.roles.includes(roleId));
 }
 function getDiscordNavigationItems(){
-  const items=[{id:"users",title:translateText("Users"),meta:translateText("Discover Music Hub members"),icon:"♙"}];
-  if(!isDiscordAuthenticated())return items;
-  items.push({id:"profil",title:translateText("Profile"),meta:"",icon:"◎"});
+  if(!isDiscordAuthenticated())return [];
+  const items=[{id:"profil",title:translateText("Profile"),meta:"",icon:"◎"}];
   if(!isDiscordGuildMember())return items;
   items.push({id:"friends",title:translateText("Friends"),meta:translateText("Connected Hub members"),icon:"♡"});
   if(canSeeDiscordModeration())items.push({id:"moderation",title:translateText("Moderation"),meta:"",icon:"◇"});
