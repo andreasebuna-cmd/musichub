@@ -43,7 +43,7 @@
   }
   function toggleNotifications(){
     if(!auth())return;var p=document.getElementById("notification-panel"),b=document.getElementById("notification-btn");if(!p||!b)return;
-    var open=!p.classList.contains("open");p.classList.toggle("open",open);b.classList.toggle("open",open);b.setAttribute("aria-expanded",open?"true":"false");if(open)loadNotifications(false);
+    var open=!p.classList.contains("open");p.classList.toggle("open",open);b.classList.toggle("open",open);b.setAttribute("aria-expanded",open?"true":"false");if(open){var badge=document.getElementById("notification-badge");if(badge){badge.textContent="0";badge.classList.remove("visible")}var count=document.getElementById("notification-panel-count");if(count)count.textContent="";fetch("/api/notifications",{method:"POST",credentials:"same-origin",cache:"no-store"}).catch(function(){});loadNotifications(false);}
   }
   async function sendFriend(id,button){
     button.disabled=true;try{var r=await fetch("/api/friends/request",{method:"POST",credentials:"same-origin",headers:{"Content-Type":"application/json"},body:JSON.stringify({userId:id})}),d=await r.json();button.textContent=d.status==="friends"?"✓ Friends":"Request sent";button.classList.add(d.status==="friends"?"friend-added":"friend-requested")}catch(e){button.disabled=false}
