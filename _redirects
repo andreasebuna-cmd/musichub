@@ -1,5 +1,3 @@
-/moderation/  /error/  404
-/moderation/*  /error/  404
 /countdown/   /countdown/index.html   200
 /vip/         /vip/index.html         200
 /error/       /error/index.html       200
