@@ -1059,13 +1059,18 @@ function closeUsersAuthPrompt(){const modal=document.getElementById("users-auth-
 async function openMemberProfile(id){
   if(!isDiscordGuildMember()){openUsersAuthPrompt();return;}
   selectedProfileId=String(id||"");
+  showPage("profil");
   renderDiscordProfile();
   try{
     const response=await fetch("/api/profiles/view?id="+encodeURIComponent(selectedProfileId),{credentials:"same-origin",cache:"no-store"});
     if(!response.ok)throw new Error();
     const data=await response.json();
     if(data.profile)renderViewedProfile(data.profile);
-  }catch(error){}
+    else throw new Error("Profile not available");
+  }catch(error){
+    const root=document.getElementById("profile-content");
+    if(root)root.innerHTML='<div class="profile-card"><div class="profile-note">Unable to load this profile right now.</div></div>';
+  }
 }
 function renderViewedProfile(profile){
   const root=document.getElementById("profile-content");
