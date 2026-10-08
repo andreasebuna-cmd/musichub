@@ -1025,17 +1025,11 @@ function renderDiscordServerCta(){
     link.textContent=translateText(member?"Go to the server ↗":"Join the server ↗");
   });
 }
-// This only controls navigation visibility; the backend must enforce actual moderation access.
-function canSeeDiscordModeration(){
-  const roleIds=DISCORD_CONFIG.moderationRoleIds;
-  return isDiscordGuildMember()&&Array.isArray(roleIds)&&Array.isArray(discordUser.roles)&&roleIds.some(roleId=>discordUser.roles.includes(roleId));
-}
 function getDiscordNavigationItems(){
   if(!isDiscordAuthenticated())return [];
   const items=[{id:"profil",title:translateText("Profile"),meta:"",icon:"◎"}];
   if(!isDiscordGuildMember())return items;
   items.push({id:"friends",title:translateText("Friends"),meta:translateText("Connected Hub members"),icon:"♡"});
-  if(canSeeDiscordModeration())items.push({id:"moderation",title:translateText("Moderation"),meta:"",icon:"◇"});
   return items;
 }
 function escapeHtml(value){
@@ -1229,12 +1223,11 @@ function handleDiscordAction(event){
 async function logoutDiscord(){
   try{await fetch(DISCORD_CONFIG.logoutEndpoint,{method:"POST",credentials:"include"});}catch(error){}
   setDiscordUser(null);
-  if(location.hash==="#profil"||location.hash==="#friends"||location.hash==="#moderation"){history.replaceState(null,"","#home");syncMainMenuActive();}
+  if(location.hash==="#profil"||location.hash==="#friends"){history.replaceState(null,"","#home");syncMainMenuActive();}
 }
 function navigateDiscordSection(id){
   if(id==="users"){showPage("users");return true;}
   if((id==="profil"||id==="friends")&&!isDiscordGuildMember())return false;
-  if(id==="moderation"&&!canSeeDiscordModeration())return false;
   showPage(id);return true;
 }
 function handleDiscordProfileLink(event){
@@ -1266,7 +1259,7 @@ function closeMainMenu(){
   menu.classList.remove("open");button.setAttribute("aria-expanded","false");menu.setAttribute("aria-hidden","true");
 }
 function handleMainMenuDestination(id){
-  if(id==="users"||id==="profil"||id==="friends"||id==="moderation"){closeMainMenu();navigateDiscordSection(id);return}
+  if(id==="users"||id==="profil"||id==="friends"){closeMainMenu();navigateDiscordSection(id);return}
   const item=searchDestinations.find(entry=>entry.id===id); if(!item)return;
   closeMainMenu();
   if(item.external){if(item.id==="dj-andrs"){openSiteWarning();return}window.open(item.external,"_blank","noopener,noreferrer");return}
