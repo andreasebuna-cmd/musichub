@@ -21,7 +21,7 @@
 <script>
 (function(){
   const allowedPaths=["/","/index.html","/countdown/","/vip/","/error/"];
-  const path=window.location.pathname.replace(/\\/+$/,"")||"/";
+  const path=window.location.pathname.replace(/\/+$/,"")||"/";
   const isKnownPath=allowedPaths.includes(path) || path.startsWith("/assets/");
   if(!isKnownPath && !path.startsWith("/error")) {
     window.location.replace("/error/");
