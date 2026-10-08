@@ -4,6 +4,15 @@ export async function onRequestGet({request,env}){
   if(!env.PROFILE_KV)return json({profile:null,configured:false});
   const id=(new URL(request.url).searchParams.get("id")||"").trim();
   if(!/^\d{15,25}$/.test(id))return json({profile:null},400);
+  const viewerSession=env.SESSION_SECRET?await decryptSession(cookieValue(request,SESSION_COOKIE),env.SESSION_SECRET):null;
+  const viewerId=String(viewerSession?.user?.id||"");
+  if(!viewerId)return json({profile:null,error:"Authentication required"},401);
+  if(!env.DISCORD_BOT_TOKEN)return json({profile:null,error:"Discord verification unavailable"},503);
+  try{
+    const viewerMember=await discordGuildMember(viewerId,env.DISCORD_BOT_TOKEN);
+    if(!viewerMember)return json({profile:null,error:"Server membership required"},403);
+  }catch(error){return json({profile:null,error:"Discord verification failed"},503);}
+
   const raw=await env.PROFILE_KV.get("profile:"+id);
   if(!raw)return json({profile:null},404);
   let profile;
@@ -16,8 +25,6 @@ export async function onRequestGet({request,env}){
     }catch(error){}
   }
 
-  const viewerSession=env.SESSION_SECRET?await decryptSession(cookieValue(request,SESSION_COOKIE),env.SESSION_SECRET):null;
-  const viewerId=String(viewerSession?.user?.id||"");
   const isOwner=viewerId===id;
   let viewerFriends=[]; if(viewerId){try{const friendsRaw=await env.PROFILE_KV.get("friends:"+viewerId);viewerFriends=friendsRaw?JSON.parse(friendsRaw):[]}catch(error){}}
   const areFriends=viewerFriends.map(String).includes(id);
