@@ -23,7 +23,8 @@ export async function onRequestGet({request,env}){
           username:profile.privacy==="public"?username:displayName,
           displayName,
           avatar:String(profile.avatar||""),
-          privacy:profile.privacy==="public"?"public":"private"
+          privacy:profile.privacy==="public"?"public":"private",
+          roles:Array.isArray(profile.roles)?profile.roles.map(String):[]
         });
       }catch(error){}
     }
