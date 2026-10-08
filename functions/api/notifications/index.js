@@ -3,7 +3,21 @@ import {json,cookieValue,decryptSession,SESSION_COOKIE} from "../../_discord.js"
 async function session(request,env){
   return env.SESSION_SECRET?await decryptSession(cookieValue(request,SESSION_COOKIE),env.SESSION_SECRET):null;
 }
-export async function onRequestPost({request,env}){\n  if(!env.PROFILE_KV)return json({ok:false,configured:false},503);\n  const s=await session(request,env);\n  const id=String(s?.user?.id||"");\n  if(!id)return json({ok:false,error:"Not authenticated"},401);\n  const key="notifications:"+id;\n  const raw=await env.PROFILE_KV.get(key);\n  let notifications=[];\n  try{notifications=raw?JSON.parse(raw):[]}catch(error){notifications=[]}\n  notifications=notifications.map(n=>({...n,read:true}));\n  await env.PROFILE_KV.put(key,JSON.stringify(notifications));\n  return json({ok:true,unreadCount:0});\n}\n\nexport async function onRequestGet({request,env}){
+export async function onRequestPost({request,env}){
+  if(!env.PROFILE_KV)return json({ok:false,configured:false},503);
+  const s=await session(request,env);
+  const id=String(s?.user?.id||"");
+  if(!id)return json({ok:false,error:"Not authenticated"},401);
+  const key="notifications:"+id;
+  const raw=await env.PROFILE_KV.get(key);
+  let notifications=[];
+  try{notifications=raw?JSON.parse(raw):[]}catch(error){notifications=[]}
+  notifications=notifications.map(n=>({...n,read:true}));
+  await env.PROFILE_KV.put(key,JSON.stringify(notifications));
+  return json({ok:true,unreadCount:0});
+}
+
+export async function onRequestGet({request,env}){
   if(!env.PROFILE_KV)return json({notifications:[],configured:false});
   const s=await session(request,env);
   const id=String(s?.user?.id||"");
